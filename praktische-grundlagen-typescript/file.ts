@@ -2,18 +2,22 @@ class person {
     name: string = ""
     age: number = 0
 }
+interface person {
+    name: string
+    age: number
+}
 
 const chris: person = { name: "chris", age: 34 }
 const oskar: person = { name: "oskar", age: 22 }
 
-const persons: person[] = []
+let persons: person[] = []
 const p2: person[] = []
 
 persons.push(chris)
 p2.push(oskar)
 
 // merge
-const newArray = [...persons, ...p2]
+persons = [...persons, ...p2]
 
 console.log(persons)
 
@@ -25,4 +29,4 @@ function firstLetterUppercase(persons: person[]): void {
     console.log(persons)
 }
 
-firstLetterUppercase(newArray)
+firstLetterUppercase(persons)
