@@ -97,11 +97,20 @@ cordova run android --list
 ### Windows
 
 1. Installation von Android Studio,
+
 2. Android SDK hinzufügen,
+
 3. Java Vers. 8.0 x64 JDK von [www.openlogic.com](https://www.openlogic.com/openjdk-downloads?field_java_parent_version_target_id=All&field_operating_system_target_id=All&field_architecture_target_id=All&field_java_package_target_id=All&page=1) laden und installieren,
-4. Systemvariable JAVA_HOME setzen auf: `C:\Program Files (x86)\OpenJDK\jdk-8.0.262.10-hotspot\`
+
+   Dabei ist ggf. der Installationspfad auf `C:\Program Files (x86)\OpenJDK\jdk-8\`
+
+4. Systemvariable JAVA_HOME setzen auf: `C:\Program Files (x86)\OpenJDK\jdk-8\`
+
+   oder: Java 11 herunterladen auf `C:\Program Files (x86)\OpenJDK\jdk-11\`
+
 5. Die Systemvariablen `ANDROID_HOME` und `ANDROID_SDK_ROOT` werden ebenfalls unter den Systemvariablen mit dem Pfad `C:\Users\christoph\AppData\Local\Android\Sdk` erstellt.
-5. Wurde Gradle nicht im Android Studio installiert, kann dies separat erfolgen.
+
+6. Wurde Gradle nicht im Android Studio installiert, kann dies separat erfolgen.
 
    * Gradle kann einfach unter https://gradle.org/releases/ geladen werden.
 
@@ -109,6 +118,12 @@ cordova run android --list
    * Zuletzt muss Gradle noch in den *Systemvariablen* (unterer Teil) hinterlegt werden
    * "GRADLE_HOME" unter `C:\Gradle\gradle-7.3.3\bin`
    * durch `gradle -v` kann dieses getestet werden
+
+```bash
+java -version
+```
+
+
 
 Anzeige aller angesteckten Devices
 

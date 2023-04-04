@@ -192,4 +192,3 @@ git stash drop 'stash@{0}'
 ```bash
 git stash branch <branch_name>
 ```
-
