@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typescript</title>
+    <script type="text/javascript" src="src/app.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body onload="onLoad()">
+    <div class="container mx-auto bg-gray-200">
+        <button id="cssclass" class="p-2 m-4 bg-red-500 text-white rounded">Click me!</button>
+        <!-- <button id="cssclass" class="p-2 m-4 bg-red-500 text-white rounded">Click me!</button> -->
+    </div>
+    <script>
+        function onLoad() {
+            // alerter()
+        }
+        document.getElementById("cssclass").addEventListener("click", function() {
+            alert("Hello World!");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "typescript",
+  "version": "1.0.0",
+  "description": "Node.js ist eine JavaScript-Laufzeitumgebung, die auf [Chromes V8 JavaScript-Engine](https://v8.dev/) basiert. Diese kann einfach unter [nodejs.org](nodejs.org) heruntergeladen werden. Unter Linux kann es einfach per CLI installiert werden:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.3.2",
+    "typescript": "^5.1.5"
+  }
+}
