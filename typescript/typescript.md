@@ -25,17 +25,17 @@ Sind diese relevanten Teile installiert, kann mit Typescript gearbeitet werden.
 
 
 ### Transpile Typescript to Javascript
-> `tsc file.ts`
+> `npx tsc file.ts`
 
 ### Transpile in Watch Mode
-> `tsc file.ts --watch`
+> `npx tsc file.ts --watch`
 
 ### Kompilieren des Projektordners
-> `tsc --init` - initialisiert ein Typescript-Projekt
+> `npx tsc --init` - initialisiert ein Typescript-Projekt
 
 Damit wird die Datei `tsconfig.json` erstellt.
 
-> `tsc` oder `tsc --watch` - Projekt kompilieren
+> `npx tsc` oder `npx tsc --watch` - Projekt kompilieren
 
 ### tsconfig.json
 #### Exclude
