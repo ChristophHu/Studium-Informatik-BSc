@@ -1,0 +1,12 @@
+<p>{{ title }}</p>
+
+<!-- input -->
+<test [sentence]="sentence"></test>
+<test (onChange)="onParentChange($event)"></test>
+
+<input type="checkbox" [(ngModel)]="isDisabled">
+
+<input type="text" placeholder="Default Text" [disabled]="isDisabled" [value]="sentence" (change)="sentence='Neu...'">
+<p>NgModel-Bindung:</p>
+<input type="text" [(ngModel)]="sentence">
+Ausgabe: {{ sentence }}

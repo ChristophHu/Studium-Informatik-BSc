@@ -79,13 +79,95 @@ let all_fruits: string[] = [...fruits1, ...fruits2] // ["Apple", "Orange", "Bana
 let set: Set<number> = new Set([1, 2, 3, 4, 5])
 
 // Object
-interface Person {
+// das Inteface
+interface IPerson {
     name: string
     age: number
 }
-let person: Person = {
+// das Objekt
+let person: IPerson = {
     name: 'Max',
     age: 27
 }
 console.log(person.name) // Max
 
+// Klassen
+class Person {
+    name: string
+    age: number
+    constructor(name: string, age: number) {
+        this.name = name
+        this.age = age
+    }
+
+    greet() {
+        console.log('Hi, my name is ' + this.name + ' and I am ' + this.age + ' years old.')
+    }
+}
+// das Objekt der Klasse
+let max: Person = new Person('Max', 27)
+max.greet() // Hi, my name is Max and I am 27 years old.
+
+// Funktionen
+// function <funktions_name>(<parameter>: <type>,...): <return_type> {}
+function increaseAge() {
+    max.age + 1
+}
+function add(a: number, b: number): number {
+    return a + b
+}
+function divide(a: number, b: number): number {
+    return (a / b)
+}
+
+// setter und getter
+class OldPerson {
+    private name: string
+    private age: number
+    constructor(name: string, age: number) {
+        this.name = name
+        this.age = age
+    }
+
+    greet() {
+        console.log('Hi, my name is ' + this.name + ' and I am ' + this.age + ' years old.')
+    }
+
+    // setter
+    setAge(age: number) {
+        this.age = age
+    }
+    // getter
+    getAge() {
+        return this.age
+    }
+
+}
+let tom: OldPerson = new OldPerson('Tom', 36)
+tom.setAge(37)
+console.log(tom.getAge()) // 38
+
+// Vererbung
+class ErbendePerson implements IPerson {
+    name: string // gem. IPerson
+    age: number // gem. IPerson
+
+    constructor(name: string, age: number) {
+        this.name = name
+        this.age = age
+    }
+
+    greet() {
+        console.log('Hi, my name is ' + this.name + ' and I am ' + this.age + ' years old.')
+    }
+
+    sayHello(): string {
+        return 'Hello!'
+    }
+}
+
+let moritz: ErbendePerson = new ErbendePerson('Moritz', 26)
+moritz.age = 27
+console.log(moritz.age)
+console.log(moritz.name) // ''
+moritz.greet() // Hi, my name is Moritz and I am 27 years old.

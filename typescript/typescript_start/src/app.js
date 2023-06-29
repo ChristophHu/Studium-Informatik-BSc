@@ -59,8 +59,72 @@ let fruits2 = ['Mango', 'Pineapple', 'Peach'];
 let all_fruits = [...fruits1, ...fruits2]; // ["Apple", "Orange", "Banana", "Mango", "Pineapple", "Peach"]
 // Set
 let set = new Set([1, 2, 3, 4, 5]);
+// das Objekt
 let person = {
     name: 'Max',
     age: 27
 };
 console.log(person.name); // Max
+// Klassen
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    greet() {
+        console.log('Hi, my name is ' + this.name + ' and I am ' + this.age + ' years old.');
+    }
+}
+// das Objekt der Klasse
+let max = new Person('Max', 27);
+max.greet(); // Hi, my name is Max and I am 27 years old.
+// Funktionen
+// function <funktions_name>(<parameter>: <type>,...): <return_type> {}
+function increaseAge() {
+    max.age + 1;
+}
+function add(a, b) {
+    return a + b;
+}
+function divide(a, b) {
+    return (a / b);
+}
+// setter und getter
+class OldPerson {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    greet() {
+        console.log('Hi, my name is ' + this.name + ' and I am ' + this.age + ' years old.');
+    }
+    // setter
+    setAge(age) {
+        this.age = age;
+    }
+    // getter
+    getAge() {
+        return this.age;
+    }
+}
+let tom = new OldPerson('Tom', 36);
+tom.setAge(37);
+console.log(tom.getAge()); // 38
+// Vererbung
+class ErbendePerson {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    greet() {
+        console.log('Hi, my name is ' + this.name + ' and I am ' + this.age + ' years old.');
+    }
+    sayHello() {
+        return 'Hello!';
+    }
+}
+let moritz = new ErbendePerson('Moritz', 26);
+moritz.age = 27;
+console.log(moritz.age);
+console.log(moritz.name); // ''
+moritz.greet(); // Hi, my name is Moritz and I am 27 years old.

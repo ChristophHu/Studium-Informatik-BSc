@@ -38,8 +38,3 @@ Die korrekte Installation kann dann durch das folgende Kommando getestet werden:
 ```bash
 ng version
 ```
-
-
-
-
-

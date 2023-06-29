@@ -5,7 +5,7 @@
 Das Kommando zum erstellen, erstellt den Workspace mit allen benötigten Angular-Dateien.
 
 ```bash
-ng new app-name
+ng new <app-name>
 ```
 
 Während der Erstellung werden Fragen zum verwendeten Style-System (ich verwende [SASS](https://sass-lang.com/)) und Routing (ähnlich dem Seitenwechsel bei HTML) gestellt.
