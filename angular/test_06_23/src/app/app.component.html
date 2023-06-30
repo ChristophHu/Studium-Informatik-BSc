@@ -1,12 +1,20 @@
+<h2>Stringinterpolation</h2>
 <p>{{ title }}</p>
 
-<!-- input -->
+<h2>Input-/Output-Binding</h2>
 <test [sentence]="sentence"></test>
-<test (onChange)="onParentChange($event)"></test>
+<test (onChange)="varr = $event"></test>
+{{ varr }}
 
+<h2>ngModel</h2>
 <input type="checkbox" [(ngModel)]="isDisabled">
 
 <input type="text" placeholder="Default Text" [disabled]="isDisabled" [value]="sentence" (change)="sentence='Neu...'">
 <p>NgModel-Bindung:</p>
 <input type="text" [(ngModel)]="sentence">
 Ausgabe: {{ sentence }}
+
+<h2>Hostlistener</h2>
+<div id="color">
+    Content
+</div>

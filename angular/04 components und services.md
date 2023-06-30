@@ -44,6 +44,13 @@ Durch eine Interpolation oder Stringinterpolation wird ein Strings im Html-View 
 <div>{{ variableName }}</div>
 ```
 
+In der zugehörigen Component muss die Variable mit angegeben werden.
+```typescript
+export class AppComponent {
+  variableName: string = "Hallo Welt";
+}
+```
+
 Das Fragezeichen (?) wird als safe-navigation-Operator interpretiert. Ist das Objekt nicht vorhanden, wird auch nichts ausgegeben. So können null-Checks vermieden werden
 
 ### Property-Binding
@@ -52,6 +59,7 @@ Property-Binding ist der Zugriff auf ein Attribut eines Element im Template.
 
 ```html
 <img [property]="variableName"/>
+<input type="checkbox" [value]="true"> 
 ```
 
 Dabei kann ein Ergebnis einer Funktion, einer Variable oder sonstiges Element übergeben werden.
@@ -73,7 +81,7 @@ Durch Event-Binding wird auf Events von Komponenten reagiert. Diese werden dann 
 Soll auf ein Klick eines Buttons reagiert werden, so erhält das Element den Event und die auszuführende Funktion:
 
 ```html
-<button (click)="alert("Button wurde geklickt.")"></button>
+<button (click)="alert('Button wurde geklickt.')"></button>
 ```
 
 Neben dem alert kann auch eine Funkton in der `app.component.ts` ausgeführt werden.
@@ -124,7 +132,7 @@ Wie beim Input wird beim Output der `@Output`-Decorator genutzt. Der Event vom T
 
 ```html
 <!-- Mutter-Komponente -->
-<button (clicked)="variable = $event">Bitte Klicken</button>
+<button (changeEvent)="variable = $event">Bitte Klicken</button>
 ```
 
 Durch den Klick in der Kind-Komponente wird in dieser eine Funktion ausgeführt, die per EventEmitter und Output direkt in den Aufruf der Komponente in der Mutter-Komponente übertragen wird und dort als 'clicked' abgefangen werden kann.

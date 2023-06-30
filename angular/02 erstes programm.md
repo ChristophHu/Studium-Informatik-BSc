@@ -76,6 +76,7 @@ Anschließend wird in der `angular.json` folgende Veränderung vorgenommen:
 }
 ```
 
- Somit wird das Ergebnis des Build in den Ordner `./www` abgelegt und Cordova kann direkt den Angular-Build verwenden.
+Somit wird das Ergebnis des Build in den Ordner `./www` abgelegt und Cordova kann direkt den Angular-Build verwenden.
 
 Der Unterschied der Erstellung einer einfachen Angular-Anwendung und einer Anwendung mit erweiterter Projektstruktur, ist dem Workspace zu entnehmen.
+

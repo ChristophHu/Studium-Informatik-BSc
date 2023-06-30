@@ -1,0 +1,21 @@
+{
+  "debugging": true,
+
+  "api_endpoints": {
+    "user": "api/v1/user"
+  },
+  "adfs":{
+    "baseurl": "https://map-adfs10-v.int.polizei.berlin.de/adfs",
+    "key_userid": "upn",
+    "client_id": "c1780010-70a7-44d0-b8db-87009266bf08",
+    "scope": "openid email profile offline_access allatclaims",
+    "proxy": "172.254.1.10:8080"
+  },
+  "login": {
+    "url": "https://192.168.178.55/login_service/Login.asmx?op=createToken",
+    "package": "de.berlin.polizei.polwsp"
+  },
+  "url": "https://192.168.178.55/login_service/Login.asmx/createToken",
+  "backend": "https://polosk-lb.int.polizei.berlin.de/polwsp_service",
+  "swagger": "https://dc2019.poldom.local/polwsp_service/swagger/index.html"
+}
