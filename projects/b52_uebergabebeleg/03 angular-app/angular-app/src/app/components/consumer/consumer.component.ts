@@ -15,10 +15,10 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
   styleUrl: './consumer.component.sass'
 })
 export class ConsumerComponent {
-  uebergabeForm: FormGroup
+  consumerForm: FormGroup
 
-  constructor(private _bf: FormBuilder) {
-    this.uebergabeForm = this._bf.group({
+  constructor(private _fb: FormBuilder) {
+    this.consumerForm = this._fb.group({
       personalnummer: new FormControl('24225132', [Validators.required]),
       mail: new FormControl('', [Validators.email]),
       name: new FormControl('', [Validators.required]),

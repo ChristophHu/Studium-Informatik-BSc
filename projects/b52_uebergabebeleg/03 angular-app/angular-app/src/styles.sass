@@ -72,7 +72,7 @@
     user-select: none
 
 body
-    // @apply overflow-hidden
+    @apply overflow-hidden
 
 .scrollbar-hide
     -ms-overflow-style: none
@@ -89,3 +89,30 @@ body
 
 input, textarea
     @apply ring-0 ring-offset-0 outline-none
+
+// label
+@mixin nxt_label
+    @apply text-label
+
+@mixin nxt_input
+    @apply bg-input text-darker disabled:text-disabled placeholder:text-placeholder
+
+.nxt_input
+    .nxt_input_label
+        @include nxt_label
+        @apply select-none
+
+    .nxt_input_field
+        @include nxt_input
+        @apply focus:border-static_gray border-borderline
+
+    .nxt_input_area
+        @include nxt_input
+        @apply focus:border-static_gray border-borderline
+
+    .nxt_input_date
+        @include nxt_input
+        @apply focus:border-static_gray border-borderline
+
+    .nxt_input_action_icon
+        @apply text-icon

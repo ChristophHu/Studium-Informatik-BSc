@@ -3,7 +3,9 @@ module.exports = {
   content: [
     './src/**/*.{html,ts,css,scss,sass,less,styl}'
   ],
+  darkMode: true, // or 'media' or 'class'
   theme: {
+    
     extend: {
       colors: {
         // menu

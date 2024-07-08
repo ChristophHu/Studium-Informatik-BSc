@@ -1,4 +1,57 @@
-<token-item></token-item>
-<token-item></token-item>
-<token-item></token-item>
-<token-item></token-item>
+<div class="m-2">
+    <h2 class="mt-4 text-md text-gray-600">Inhalt</h2>
+    <form [formGroup]="contentForm">
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Token">
+                <div class="flex flex-col" formArrayName="token">
+                    <div class="nxt_input flex flex-col w-full mt-2" *ngFor="let element of tokenArray.controls; let i = index" formGroupName="{{i}}">
+                        <label class="nxt_input_label my-2 text-sm leading-none">Token ID</label>
+                        <div class="relative mt-1 flex items-center">
+                            <input type="text" formControlName="token_id" id="token_id" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row">
+                    <button class="flex flex-row items-center w-10 h-10 p-2 bg-gray-800 text-white rounded shadow-lg" (click)="addToken()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
+                </div>
+            </mat-tab>
+            <mat-tab label="Endgeraete">
+                <div class="flex flex-col" formArrayName="endgeraete">
+                    <div *ngFor="let element of endgeraeteArray.controls; let i = index" formGroupName="{{i}}">
+                        <div class="nxt_input flex flex-col w-full mt-2">
+                            <label class="nxt_input_label my-2 text-sm leading-none">IMEI</label>
+                            <div class="relative mt-1 flex items-center">
+                                <input type="text" formControlName="imei" id="imei" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="nxt_input flex flex-col w-full mt-2">
+                            <label class="nxt_input_label my-2 text-sm leading-none">Rufnummer</label>
+                            <div class="relative mt-1 flex items-center">
+                                <input type="text" formControlName="rufnummer" id="rufnummer" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="nxt_input flex flex-col w-full mt-2">
+                            <label class="nxt_input_label my-2 text-sm leading-none">PIN</label>
+                            <div class="relative mt-1 flex items-center">
+                                <input type="text" formControlName="pin" id="pin" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="flex flex-row">
+                    <button class="flex flex-row items-center w-10 h-10 p-2 bg-gray-800 text-white rounded shadow-lg" (click)="addEndgeraet()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </form>
+    <!-- <pre class="m-2 p-2 bg-blue-200 rounded">{{ contentForm.value | json }}</pre> -->
+</div>

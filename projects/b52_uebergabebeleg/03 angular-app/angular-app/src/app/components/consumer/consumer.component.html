@@ -1,37 +1,38 @@
-<div>
-    <form [formGroup]="uebergabeForm">
-        <div class="m-2 grid grid-cols-2 gap-2">
-          <div class="nxt_input flex flex-col w-full mt-2">
-            <label class="nxt_input_label my-2 text-sm leading-none">Personalnummer</label>
-            <div class="relative mt-1 flex items-center">
-                <input type="text" formControlName="personalnummer" id="personalnummer" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="00000000" />
-            </div>
-          </div>
-          <div class="nxt_input flex flex-col w-full mt-2">
-            <label class="nxt_input_label my-2 text-sm leading-none">Mail</label>
-            <div class="relative mt-1 flex items-center">
-                <input type="text" formControlName="mail" id="mail" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
-            </div>
-          </div>
-          <div class="nxt_input flex flex-col w-full mt-2">
-            <label class="nxt_input_label my-2 text-sm leading-none">Name</label>
-            <div class="relative mt-1 flex items-center">
-                <input type="text" formControlName="name" id="name" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
-            </div>
-          </div>
-          <div class="nxt_input flex flex-col w-full mt-2">
-            <label class="nxt_input_label my-2 text-sm leading-none">Vorname</label>
-            <div class="relative mt-1 flex items-center">
-                <input type="text" formControlName="vorname" id="vorname" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
-            </div>
-          </div>
-          <div class="nxt_input flex flex-col w-full mt-2">
-            <label class="nxt_input_label my-2 text-sm leading-none">Abteilung</label>
-            <div class="relative mt-1 flex items-center">
-                <input type="text" formControlName="abteilung" id="abteilung" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
-            </div>
-          </div>
+<div class="m-2">
+  <h2 class="mt-4 text-md text-gray-600">Übernehmender</h2>
+  <form [formGroup]="consumerForm">
+    <div class="grid grid-cols-2 gap-2">
+      <div class="nxt_input flex flex-col w-full mt-2">
+        <label class="nxt_input_label my-2 text-sm leading-none">Personalnummer</label>
+        <div class="relative mt-1 flex items-center">
+          <input type="text" formControlName="personalnummer" id="personalnummer" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="00000000" />
         </div>
-    </form>
-    <pre class="m-2 p-2 bg-blue-200 rounded">{{ uebergabeForm.value | json }}</pre>
+      </div>
+      <div class="nxt_input flex flex-col w-full mt-2">
+        <label class="nxt_input_label my-2 text-sm leading-none">Mail</label>
+        <div class="relative mt-1 flex items-center">
+          <input type="text" formControlName="mail" id="mail" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+        </div>
+      </div>
+      <div class="nxt_input flex flex-col w-full mt-2">
+        <label class="nxt_input_label my-2 text-sm leading-none">Name</label>
+        <div class="relative mt-1 flex items-center">
+          <input type="text" formControlName="name" id="name" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+        </div>
+      </div>
+      <div class="nxt_input flex flex-col w-full mt-2">
+        <label class="nxt_input_label my-2 text-sm leading-none">Vorname</label>
+        <div class="relative mt-1 flex items-center">
+          <input type="text" formControlName="vorname" id="vorname" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+        </div>
+      </div>
+      <div class="nxt_input flex flex-col w-full mt-2">
+        <label class="nxt_input_label my-2 text-sm leading-none">Abteilung</label>
+        <div class="relative mt-1 flex items-center">
+          <input type="text" formControlName="abteilung" id="abteilung" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- <pre class="m-2 p-2 bg-blue-200 rounded">{{ consumerForm.value | json }}</pre> -->
 </div>
