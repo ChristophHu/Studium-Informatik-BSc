@@ -1,57 +1,81 @@
 <div class="m-2">
-    <h2 class="mt-4 text-md text-gray-600">Inhalt</h2>
+    <h2 class="mt-4 text-md text-dark">Inhalt</h2>
     <form [formGroup]="contentForm">
         <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-            <mat-tab label="Token">
+            <mat-tab [label]="'Token (' + getTokenArrayLength() + ')'">
+                <div class="flex flex-row-reverse">
+                    <button class="p-2 bg-secondary text-accent rounded shadow-lg" (click)="addToken()">
+                        <div class="h-6 w-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                        </div>
+                    </button>
+                </div>
                 <div class="flex flex-col" formArrayName="token">
-                    <div class="nxt_input flex flex-col w-full mt-2" *ngFor="let element of tokenArray.controls; let i = index" formGroupName="{{i}}">
-                        <label class="nxt_input_label my-2 text-sm leading-none">Token ID</label>
-                        <div class="relative mt-1 flex items-center">
-                            <input type="text" formControlName="token_id" id="token_id" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+                    <div class="nxt_input flex flex-col w-full mt-1" *ngFor="let element of tokenArray.controls; let i = index" formGroupName="{{i}}">
+                        <label class="nxt_input_label my-2 text-sm leading-none" [for]="'token_sn' + i">Token ID</label>
+                        <div class="relative flex items-end">
+                            <input type="text" formControlName="token_sn" [id]="'token_sn' + i" class="nxt_input_field w-full p-2 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+                            <button class="ml-2 p-2 bg-secondary text-red-500 rounded shadow-lg" (click)="removeToken(element.value.token_id)">
+                                <div class="h-6 w-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                </div>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-row">
-                    <button class="flex flex-row items-center w-10 h-10 p-2 bg-gray-800 text-white rounded shadow-lg" (click)="addToken()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                    </button>
+                <div class="nxt_input flex flex-col w-full mt-1">
+                    <label class="nxt_input_label my-2 text-sm leading-none" for="token_description">Bemerkungen</label>
+                    <div class="relative flex items-center">
+                        <textarea type="text" formControlName="token_description" id="token_description" class="nxt_input_field w-full p-2 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" rows="3"></textarea>
+                    </div>
                 </div>
             </mat-tab>
-            <mat-tab label="Endgeraete">
-                <div class="flex flex-col" formArrayName="endgeraete">
-                    <div *ngFor="let element of endgeraeteArray.controls; let i = index" formGroupName="{{i}}">
-                        <div class="nxt_input flex flex-col w-full mt-2">
-                            <label class="nxt_input_label my-2 text-sm leading-none">IMEI</label>
-                            <div class="relative mt-1 flex items-center">
-                                <input type="text" formControlName="imei" id="imei" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
-                            </div>
+            <mat-tab [label]="'Endgeräte (' + getEndgeraeteArrayLength() + ')'">
+                <div class="flex flex-row-reverse">
+                    <button class="p-2 bg-secondary text-accent rounded shadow-lg" (click)="addEndgeraet()">
+                        <div class="h-6 w-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                         </div>
-                        <div class="nxt_input flex flex-col w-full mt-2">
-                            <label class="nxt_input_label my-2 text-sm leading-none">Rufnummer</label>
-                            <div class="relative mt-1 flex items-center">
-                                <input type="text" formControlName="rufnummer" id="rufnummer" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
-                            </div>
-                        </div>
-                        <div class="nxt_input flex flex-col w-full mt-2">
-                            <label class="nxt_input_label my-2 text-sm leading-none">PIN</label>
-                            <div class="relative mt-1 flex items-center">
-                                <input type="text" formControlName="pin" id="pin" class="nxt_input_field w-full p-3 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="flex flex-row">
-                    <button class="flex flex-row items-center w-10 h-10 p-2 bg-gray-800 text-white rounded shadow-lg" (click)="addEndgeraet()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
                     </button>
+                </div>
+                <div class="flex flex-col" formArrayName="endgeraete">
+                    <div class="flex flex-row items-end" *ngFor="let element of endgeraeteArray.controls; let i = index" formGroupName="{{i}}">
+                        <div class="grow grid sm:grid-cols-3 gap-2">
+                            <div class="nxt_input flex flex-col w-full mt-1">
+                                <label class="nxt_input_label my-2 text-sm leading-none" [for]="'imei' + i">IMEI</label>
+                                <div class="relative flex items-center">
+                                    <input type="text" formControlName="imei" [id]="'imei' + i" class="nxt_input_field w-full p-2 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="nxt_input flex flex-col w-full mt-1">
+                                <label class="nxt_input_label my-2 text-sm leading-none" [for]="'rufnummer' + i">Rufnummer</label>
+                                <div class="relative flex items-center">
+                                    <input type="text" formControlName="rufnummer" [id]="'rufnummer' + i" class="nxt_input_field w-full p-2 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="nxt_input flex flex-col w-full mt-1">
+                                <label class="nxt_input_label my-2 text-sm leading-none" [for]="'pin' + i">PIN</label>
+                                <div class="relative flex items-center">
+                                    <input type="text" formControlName="pin" [id]="'pin' + i" class="nxt_input_field w-full p-2 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
+                                </div>
+                            </div>
+                        </div>
+                        <button class="ml-2 h-10 w-10 p-2 bg-secondary text-red-500 rounded shadow-lg" (click)="removeEndgeraet(element.value.endgeraet_id)">
+                            <div class="h-6 w-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="nxt_input flex flex-col w-full mt-1">
+                    <label class="nxt_input_label my-2 text-sm leading-none" for="endgeraete_description">Bemerkungen</label>
+                    <div class="relative flex items-center">
+                        <textarea type="text" formControlName="endgeraete_description" id="endgeraete_description" class="nxt_input_field w-full p-2 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" rows="3"></textarea>
+                    </div>
                 </div>
             </mat-tab>
         </mat-tab-group>
     </form>
+    <hr class="mt-4 h-px bg-light border-none">
     <!-- <pre class="m-2 p-2 bg-blue-200 rounded">{{ contentForm.value | json }}</pre> -->
 </div>

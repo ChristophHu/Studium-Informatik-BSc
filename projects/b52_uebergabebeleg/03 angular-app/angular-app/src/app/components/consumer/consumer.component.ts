@@ -23,7 +23,8 @@ export class ConsumerComponent {
       mail: new FormControl('', [Validators.email]),
       name: new FormControl('', [Validators.required]),
       vorname: new FormControl(''),
-      abteilung: new FormControl('')
+      abteilung: new FormControl(''),
+      assyst: new FormControl('')
     })
   }
 }
