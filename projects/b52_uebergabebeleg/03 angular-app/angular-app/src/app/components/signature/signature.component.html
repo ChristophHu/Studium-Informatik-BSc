@@ -1,1 +1,32 @@
-<p class="m-2">signature works!</p>
+<div class="nxt_signature">
+    <button *ngIf="!signature || signature=='0'" class="nxt_signature_button p-2 w-full font-sans italic text-cemter rounded bg-input text-darker disabled:text-disabled" (click)="openSignPad()" [disabled]="isDisabled">
+      unterschreiben
+    </button>
+    <div *ngIf="signature" class="nxt_signature_field relative flex p-2 bg-input text-darker border border-borderline justify-end rounded">
+      <img class="nxt_signature_img invert-0 z-20" src="{{ signature }}" alt="" srcset="" />
+      <div class="nxt_signature_action_icon grid absolute top-0 right-0 h-8 w-8 stroke-2 place-items-center cursor-pointer z-90" (click)="clear()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+      </div>
+    </div>
+    
+    <section *ngIf="isShowModal" class="fixed inset-0 overflow-hidden">
+      <div class="min-h-screen bg-black bg-opacity-60 z-50" @fadeIn @fadeOut (click)="close()"></div>
+      <div *ngIf="isShowModal" (click)="$event.stopPropagation()" @fadeInTop @fadeOutTop class="nxt_signature_modal absolute flex p-4 top-4 right-4 left-4 lg:top-12 lg:right-12 lg:left-12 justify-center bg-secondary text-dark rounded-lg shadow-lg z-60">
+          <div class="absolute top-2 right-2 h-5 w-5 cursor-pointer" (click)="close()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18" stroke-linecap="round" stroke-linejoin="round" /><path d="M6 6L18 18" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </div>
+          <div class="nxt_signature_header flex flex-col w-full">
+            <h2 class="my-4 text-xl leading-6">{{ label }}</h2>
+            <p class="my-2 text-md text-gray-500">
+              {{ description }}
+            </p>
+            <div *ngIf="!signature || signature=='0'">
+              <nxt-pad (signature)="sign($event)" (cancel)="close()"></nxt-pad>
+            </div>
+            <!-- <div *ngIf="signature">
+              <img class="nxt_signature_img invert-0" src="{{ signature }}" alt="" srcset="" />
+            </div> -->
+          </div>
+      </div>
+    </section>
+  </div>

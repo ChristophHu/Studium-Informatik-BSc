@@ -1,0 +1,11 @@
+
+<div class="flex flex-col h-full w-full text-black" #wind>
+    <canvas #canvas class="bg-gray-50 border border-gray-200 shadow-inner rounded" (touchstart)="startDrawing($event)" (touchmove)="moved($event)" [width]="width" [height]="height"></canvas>
+    <div class="flex w-full my-4 justify-between">
+        <div class="flex">
+            <div class="p-2 bg-gray-300 rounded shadow-lg" (click)="close()">Abbrechen</div>
+            <div class="p-2 ml-4 bg-gray-300 rounded shadow-lg" (click)="clearPad()">Löschen</div>    
+        </div>
+        <button class="p-2 bg-green-300 rounded shadow-lg" (click)="savePad()">Speichern</button>
+    </div>
+</div>
