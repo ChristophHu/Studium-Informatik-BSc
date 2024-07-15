@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="nxt_input flex flex-col w-full mt-1">
-        <label class="nxt_input_label my-2 text-sm leading-none" for="mail">assyst</label>
+        <label class="nxt_input_label my-2 text-sm leading-none" for="mail">Assyst-Kennung</label>
         <div class="relative flex items-center">
           <input type="text" formControlName="assyst" id="assyst" class="nxt_input_field w-full p-2 border rounded focus:outline-none text-sm font-medium leading-none disabled:pointer-events-none" placeholder="" />
         </div>
@@ -41,5 +41,5 @@
     </div>
   </form>
   <hr class="mt-4 h-px bg-light border-none">
-  <!-- <pre class="m-2 p-2 bg-blue-200 rounded">{{ consumerForm.value | json }}</pre> -->
+  <pre class="debug-item-hide m-2 p-2 bg-blue-200 rounded">{{ consumerForm.value | json }}</pre>
 </div>

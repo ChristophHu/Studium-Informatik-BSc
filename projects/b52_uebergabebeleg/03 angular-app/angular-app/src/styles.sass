@@ -74,6 +74,14 @@
 body
     @apply overflow-auto
 
+// debug
+body        
+    &.debug .debug-item-hide
+        @apply block
+
+    .debug-item-hide
+        @apply hidden
+
 .scrollbar-hide
     -ms-overflow-style: none
     scrollbar-width: none

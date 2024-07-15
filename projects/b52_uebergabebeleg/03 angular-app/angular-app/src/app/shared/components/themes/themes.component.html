@@ -1,0 +1,19 @@
+<!-- <div class="flex mb-4 px-4 justify-between items-center">
+    <span class="text-gray-400 text-lg">Dark-/Light-mode:</span>
+    <button *ngIf="theme=='light'" class="w-8 h-8 text-yellow-400 fill-yellow-400" (click)="toggle()">
+        <icons class="w-8 h-8 stroke-1 stroke-current" name="moon-stars"></icons>
+    </button>
+    <button *ngIf="theme=='dark'" class="w-8 h-8 text-yellow-400 fill-yellow-400" (click)="toggle()">
+        <icons class="w-8 h-8 stroke-1 stroke-current" name="sun"></icons>
+    </button>
+</div> -->
+<div class="flex p-4 justify-between items-center">
+    <span class="text-gray-400 text-lg">Dark-Mode</span>
+
+    <label class="relative inline-block m-0 p-0 border-0 align-middle cursor-pointer disabled:opacity-60 disabled:pointer-events-none">
+        <input type="checkbox" class="absolute opacity-0 w-px h-px" [name]="'theme'" [checked]="theme == 'dark' ? true : false" [disabled]="false" (change)="toggle()">
+        <div class="switch-core relative block flex w-12 h-[24px] m-0 items-center bg-gray-200 transition-colors duration-200 ease-in-out rounded-full">
+          <div class="switch-button relative block h-5 w-5 top-0 left-0 m-[2px] bg-white rounded-full overflow-hidden transition-all duration-200 ease-in-out"></div>
+        </div>
+    </label>
+</div>

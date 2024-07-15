@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "@christophhu/ngx-json-form": "^1.0.5",
     "rxjs": "~7.8.0",
     "signature_pad": "^4.1.7",
     "tslib": "^2.3.0",

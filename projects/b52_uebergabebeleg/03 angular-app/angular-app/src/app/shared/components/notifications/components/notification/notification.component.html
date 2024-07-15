@@ -1,0 +1,82 @@
+<div class="fixed flex flex-col w-full z-110" [ngClass]="position">
+    <div *ngFor="let notification of notifications" class="flex w-full md:w-128" @fadeInRight @fadeOutRight>
+        <ng-container *ngIf="notification.type === 'success'">
+            <div class="relative flex h-24 m-2 items-center justify-start bg-gray-50 dark:bg-gray-800 text-white rounded-lg shadow-lg">
+                <div class="h-full w-24 p-2 flex flex-none items-center justify-center bg-green-400 w-12 h-12 text-white rounded-l-md">
+                    <div class="h-8 w-8 stroke-2 fill-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentFill" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" /></svg>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-1 justify-center p-4">
+                    <p class="text-lg text-gray-800 dark:text-gray-100 font-semibold pb-1">{{ notification.header }}</p>
+                    <p class="h-12 text-sm text-gray-600 dark:text-gray-400 font-normal line-clamp">{{ notification.message }}</p>
+                </div>
+                <div class="flex flex-none h-full w-24 border-gray-300 dark:border-gray-700 items-center border-gray-300 pl-4 cursor-pointer" (click)="remove(notification.id)">
+                    <div class="pt-2 pb-2 w-full flex justify-center">
+                        <span class="text-sm text-green-400">OK</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="notification.type === 'error'">
+            <div class="relative flex h-24 m-2 items-center justify-start bg-gray-50 dark:bg-gray-800 text-white rounded-lg shadow-lg">
+                <div class="h-full w-20 p-2 flex flex-none items-center justify-center bg-red-400 w-12 h-12 text-white rounded-l-md">
+                    <div class="h-8 w-8 stroke-2 fill-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentFill" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-1 justify-center p-4">
+                    <p class="text-lg text-gray-800 dark:text-gray-100 font-semibold pb-1">{{ notification.header }}</p>
+                    <p class="h-12 text-sm text-gray-600 dark:text-gray-400 font-normal line-clamp">{{ notification.message }}</p>
+                </div>
+                <div class="flex flex-col flex-none h-full w-24 border-l border-gray-300 dark:border-gray-700">
+                    <div class="grid h-12 px-2 place-items-center cursor-pointer"(click)="notification.response(false); remove(notification.id)">
+                        <span class="text-gray-600">OK</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="notification.type === 'request'">
+            <div class="relative flex h-24 w-full m-2 items-center justify-start bg-gray-50 dark:bg-gray-800 text-white text-base rounded-lg shadow-lg">
+                <div class="h-full w-20 p-2 flex flex-none items-center justify-center bg-red-400 w-12 h-12 text-white rounded-l-md">
+                    <div class="h-8 w-8 stroke-2 fill-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentFill" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" /></svg>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-1 justify-center p-4">
+                    <p class="text-gray-800 dark:text-gray-100 font-semibold pb-1">{{ notification.header }}</p>
+                    <p class="h-12 text-gray-600 text-sm dark:text-gray-400 font-normal line-clamp">{{ notification.message }}</p>
+                </div>
+                <div class="flex flex-col flex-none h-full w-24 border-l border-gray-300 dark:border-gray-700">
+                    <div class="grid h-12 px-2 place-items-center cursor-pointer border-b border-gray-300 dark:border-gray-700" (click)="notification.response(true); remove(notification.id)">
+                        <span class="font-bold text-red-400">Ja</span>
+                    </div>
+                    <div class="grid h-12 px-2 place-items-center cursor-pointer"(click)="notification.response(false); remove(notification.id)">
+                        <span class="text-gray-600">Nein</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="notification.type === 'warning'">
+            <div class="relative flex h-24 w-full m-2 items-center justify-start bg-gray-50 dark:bg-gray-800 text-white text-base rounded-lg shadow-lg">
+                <div class="h-full w-20 p-2 flex flex-none items-center justify-center bg-yellow-400 w-12 h-12 text-white rounded-l-md">
+                    <div class="h-8 w-8 stroke-2 fill-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentFill" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" /></svg>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-1 justify-center p-4">
+                    <p class="text-gray-800 dark:text-gray-100 font-semibold pb-1">{{ notification.header }}</p>
+                    <p class="h-12 text-gray-600 text-sm dark:text-gray-400 font-normal line-clamp">{{ notification.message }}</p>
+                </div>
+                <div class="flex flex-col flex-none h-full w-24 border-l border-gray-300 dark:border-gray-700">
+                    <div class="grid h-12 px-2 place-items-center cursor-pointer border-b border-gray-300 dark:border-gray-700" (click)="notification.response(true); remove(notification.id)">
+                        <span class="font-bold text-red-400">Ja</span>
+                    </div>
+                    <div class="grid h-12 px-2 place-items-center cursor-pointer"(click)="notification.response(false); remove(notification.id)">
+                        <span class="text-gray-600">Nein</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

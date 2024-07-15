@@ -1,21 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, isDevMode } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ConsumerComponent } from './components/consumer/consumer.component';
-import { SignatureComponent } from './components/signature/signature.component';
-import { ContentComponent } from './components/content/content.component';
+import { ConsumerComponent } from './modules/landing/consumer/consumer.component';
+import { ContentComponent } from './modules/landing/content/content.component';
+import { SignatureComponent } from './shared/components/signature/signature.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    ConsumerComponent,
-    ContentComponent,
+    // ConsumerComponent,
+    // ContentComponent,
     RouterOutlet,
-    SignatureComponent
+    // SignatureComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })
 export class AppComponent {
-  
+  constructor() {
+    console.log('application is running in devmode', isDevMode())
+  }
+
+  @HostListener('document:backbutton', ['$event'])
+  onBackButton(event: any) {
+  }
 }

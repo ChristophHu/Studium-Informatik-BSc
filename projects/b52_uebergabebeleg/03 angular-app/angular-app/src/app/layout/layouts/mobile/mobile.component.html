@@ -1,0 +1,32 @@
+<!-- <p>mobile works!</p> -->
+<div *ngIf="loading" class="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-60 z-50">
+  <circular-spinner></circular-spinner>
+</div>
+
+<div class="relative flex h-screen bg-menu overflow-hidden">
+    <div class="flex flex-col w-80 flex-shrink-0">
+      <sidebar (isOpen)="close($event)" [isOpened]="isOpen"></sidebar>
+    </div>
+    <div class="absolute inset-0 w-full flex flex-col duration-100 ease-linear" [ngClass]="isOpen ? 'ml-80 scale-y-95' : 'ml-0 scale-100'">
+        <div class="relative h-full w-full bg-secondary">
+          <!-- [ngClass]="{'rounded-l-lg' : isOpen}" -->
+            <topnav></topnav>
+            <div class="absolute mt-1 top-4 left-4 cursor-pointer text-darker z-110" (click)="isOpen = !isOpen">
+              <div class="h-8 w-8" *ngIf="!isOpen">
+                <icons class="stroke-2 stroke-current" name="menu"></icons>
+              </div>
+              <div class="h-8 w-8" *ngIf="isOpen">
+                <icons class="stroke-2 stroke-current" name="arrow-left"></icons>
+              </div>
+            </div>
+            <div class="absolute inset-0 top-16 overflow-hidden">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        @if (isOpen) {
+          <div class="absolute inset-0 bg-black bg-opacity-50 z-100" (click)="isOpen = false"></div>
+        }
+    </div>
+</div>
+
+<notifications></notifications>

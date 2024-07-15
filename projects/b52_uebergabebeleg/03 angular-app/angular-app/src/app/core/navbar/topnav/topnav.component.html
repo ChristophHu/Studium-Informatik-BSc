@@ -1,0 +1,22 @@
+<div class="absolute h-16 w-full p-5 flex justify-between items-center bg-primary text-darker bg-opacity-75 shadow-lg z-90">
+    <div class="flex justify-center items-center">
+        <!-- <button id="open" [ngClass]="'text-gray-800 ' + (status ? 'hidden' : 'block')" aria-label="open" (click)="sidebarHandler()" class="w-8 h-8 focus:outline-none ">
+            <icons class="w-8 h-8 stroke-1 stroke-current" name="menu"></icons>
+        </button>
+        <button *ngIf="status === true" aria-label="close" (click)="status = !status" class="w-8 h-8 focus:outline-none">
+            <icons class="w-8 h-8 stroke-1 stroke-current" name="menu-off"></icons>
+        </button> -->
+    </div>
+    <div>
+        <!-- <h2 *ngIf="isOffline" class="bg-red-200">Bordbuch ist offline</h2> -->
+        <h2 class="text-base">Übergabebelege</h2>
+        <!-- <h2 class="text-base">{{ (schiff$ | async)?.name }}</h2>
+        <div class="flex items-center space-x-2">
+            <h5 class="text-xs">{{ (streife$ | async)?.status }}</h5>
+            <h5 class="text-xs">{{ (streife$ | async)?.start | date: 'dd.MM.yyyy HH:mm:ss' }}</h5>
+        </div> -->
+    </div>
+    <div class="flex justify-between items-center space-x-3">
+        <icons class="h-8" name="bordbuch-boot"></icons>
+    </div>
+</div>

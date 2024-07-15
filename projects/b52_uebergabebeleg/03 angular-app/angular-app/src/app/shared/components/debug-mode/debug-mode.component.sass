@@ -1,0 +1,23 @@
+// body        
+//     &.debug .debug-item-hide
+//         @apply block
+
+//     .debug-item-hide
+//         @apply hidden
+
+:host
+  .debug-item-hide
+    display: none
+
+  .debug &
+    .debug-item-hide
+      display: block
+
+input:checked
+  + .switch-core
+    // @apply bg-blue-500
+    background-color: rgb(59, 130, 246)
+
+    .switch-button
+      // @apply transform translate-x-6
+      transform: translateX(1.5rem)
