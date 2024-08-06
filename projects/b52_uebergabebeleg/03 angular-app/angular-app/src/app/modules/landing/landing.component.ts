@@ -15,5 +15,7 @@ import { SignatureComponent } from '../../shared/components/signature/signature.
   styleUrl: './landing.component.sass'
 })
 export class LandingComponent {
-
+  genPdf() {
+    
+  }
 }

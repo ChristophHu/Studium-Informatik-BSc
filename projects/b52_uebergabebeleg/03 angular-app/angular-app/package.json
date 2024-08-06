@@ -21,6 +21,9 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@christophhu/ngx-json-form": "^1.0.5",
+    "ng2-pdfjs-viewer": "^17.0.3",
+    "pdfjs-dist": "^4.2.67",
+    "pdfmake": "^0.2.10",
     "rxjs": "~7.8.0",
     "signature_pad": "^4.1.7",
     "tslib": "^2.3.0",
@@ -31,6 +34,7 @@
     "@angular/cli": "^17.3.7",
     "@angular/compiler-cli": "^17.3.0",
     "@types/jasmine": "~5.1.0",
+    "@types/pdfmake": "^0.1.21",
     "autoprefixer": "^10.4.19",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
@@ -41,5 +45,27 @@
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
     "typescript": "~5.4.2"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "true"
+      },
+      "cordova-plugin-cors": {},
+      "cordova-plugin-file": {
+        "ANDROIDX_WEBKIT_VERSION": "1.4.0"
+      },
+      "cordova-plugin-camera": {
+        "ANDROIDX_CORE_VERSION": "1.6.+"
+      },
+      "cordova-plugin-device": {},
+      "cordova-plugin-oidc": {},
+      "cordova-plugin-startintent": {},
+      "cordova-pdf-generator": {},
+      "cordova-plugin-network-information": {}
+    }
   }
 }

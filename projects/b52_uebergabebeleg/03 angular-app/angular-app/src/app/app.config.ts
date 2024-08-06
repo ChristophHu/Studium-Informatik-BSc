@@ -10,7 +10,9 @@ export const routes: Routes = [
     component: LayoutComponent,
     data: { layout: 'mobile' }, 
     children: [
-      { path: '', loadComponent: () => import('./modules/landing/landing.component').then(m => m.LandingComponent) }
+      { path: '', loadComponent: () => import('./modules/landing/landing.component').then(m => m.LandingComponent) },
+      // http://localhost:4200/beleg/
+      { path: 'beleg', loadComponent: () => import('./modules/beleg/beleg.component').then(m => m.BelegComponent) }
     ]
   },
   { path: '**', redirectTo: '' }

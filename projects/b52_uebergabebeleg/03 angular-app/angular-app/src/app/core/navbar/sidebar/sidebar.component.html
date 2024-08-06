@@ -16,7 +16,13 @@
                         <div class="h-6 w-6 stroke-[1.5]">
                             <icons class="stroke-1 stroke-current" name="book-open"></icons>
                         </div>
-                        <span class="ml-4">Übergabebelege</span>
+                        <span class="ml-4">Eingaben</span>
+                    </div>
+                    <div class="flex w-full my-1 p-4 items-center hover:bg-lighter hover:text-black rounded-lg cursor-pointer" [routerLink]="['/beleg']" routerLinkActive="active">
+                        <div class="h-6 w-6 stroke-[1.5]">
+                            <icons class="stroke-1 stroke-current" name="book-open"></icons>
+                        </div>
+                        <span class="ml-4">Beleg</span>
                     </div>
                     <div *ngIf="debug" class="debug-item-hide flex">
                         <div class="flex w-full my-1 p-4 items-center hover:bg-lighter hover:text-black rounded-lg cursor-pointer" [routerLink]="['/debug']" routerLinkActive="active">
