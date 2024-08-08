@@ -1,6 +1,8 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DataService } from '../../../core/services/data.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'consumer',
@@ -14,17 +16,33 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
   templateUrl: './consumer.component.html',
   styleUrl: './consumer.component.sass'
 })
-export class ConsumerComponent {
+export class ConsumerComponent implements OnInit {
   consumerForm: FormGroup
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private _dataService: DataService) {
     this.consumerForm = this._fb.group({
-      personalnummer: new FormControl('24225132', [Validators.required]),
+      personalnummer: new FormControl('', [Validators.required]),
       mail: new FormControl('', [Validators.email]),
       name: new FormControl('', [Validators.required]),
       vorname: new FormControl(''),
-      abteilung: new FormControl(''),
-      assyst: new FormControl('')
+      dienststelle: new FormControl(''),
+      assystkennung: new FormControl('')
+    })
+  }
+
+  ngOnInit(): void {
+    this._dataService.consumer$
+    .pipe(take(1))
+    .subscribe({
+      next: (consumer) => {
+        this.consumerForm.patchValue(consumer)
+      }
+    })
+
+    this.consumerForm.valueChanges.subscribe({
+      next: (value) => {
+        this._dataService.setConsumer(value)
+      }
     })
   }
 }
