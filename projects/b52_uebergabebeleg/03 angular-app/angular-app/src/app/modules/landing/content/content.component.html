@@ -4,15 +4,56 @@
         <accordion [collapsing]="collapsing">
             <accordion-item title="Token" [expanded]="false">
               <ng-template accordionContent>
-                <div class="flex flex-row-reverse">
-                    <button class="p-2 bg-secondary text-accent rounded shadow-lg" (click)="addToken()">
-                        <div class="h-6 w-6">
+                <div class="flex flex-col">
+                    <table mat-table [dataSource]="dataSource" formArrayName="token" matSort>
+                        <!-- Row definitions -->
+                        <tr mat-header-row *matHeaderRowDef="tokenColumns"></tr>
+                        <tr mat-row *matRowDef="let row; let i = index; columns: tokenColumns;"></tr>
+                    
+                        <ng-container matColumnDef="count">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">Nr.</th>
+                            <td mat-cell *matCellDef="let row; let index = index"> {{ index + 1 }}. </td>
+                        </ng-container>
+
+                        <!-- <ng-container matColumnDef="token_id">
+                          <th mat-header-cell *matHeaderCellDef>ID</th>
+                          <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index"> 
+                            <input type="text" formControlName="token_id">
+                          </td>
+                        </ng-container> -->
+                    
+                        <ng-container matColumnDef="token_sn">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>S/N</th>
+                          <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                            <input type="text" formControlName="token_sn">
+                          </td>
+                        </ng-container>
+                    </table>
+                    <button class="flex flex-row w-full p-2 text-accent items-center rounded shadow-lg" (click)="addToken()">
+                        <div class="h-6 w-6 stroke-2">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                         </div>
+                        <span>Token hinzufügen</span>
+                        
                     </button>
-                </div>
-                <div class="flex flex-col" formArrayName="token">
-                    <div class="flex flex-row items-end" *ngFor="let element of tokenArray.controls; let i = index" formGroupName="{{i}}">
+                    <!-- <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                        <ng-container *ngFor="let column of tokenColumns" matColumnDef="{{ column }}" class="relative">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+                            <td mat-cell *matCellDef="let element" class="bg-yellow-200">
+                              <ng-container *ngIf="editable; else notEditable">
+                                <input type="text" [(ngModel)]="element[column]">
+                              </ng-container>
+                              <ng-template #notEditable>
+                                {{ element[column] }}
+                              </ng-template>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="tokenColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: tokenColumns;" ></tr>
+                        add row
+                    </table> -->
+
+                    <!-- <div class="flex flex-row items-end" *ngFor="let element of tokenArray.controls; let i = index" formGroupName="{{i}}">
                         <span class="h-7 w-7 text-label text-center">{{ i + 1 }}.</span>
                         <div class="nxt_input flex flex-col w-full mt-1">
                             <label class="nxt_input_label my-2 text-sm leading-none" [for]="'token_sn' + i">Token ID</label>
@@ -25,7 +66,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                             </div>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="nxt_input flex flex-col w-full mt-1">
                     <label class="nxt_input_label my-2 text-sm leading-none" for="token_description">Bemerkungen</label>

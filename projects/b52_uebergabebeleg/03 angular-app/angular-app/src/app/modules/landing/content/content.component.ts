@@ -1,10 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatTabsModule } from '@angular/material/tabs'
+// import { MatTabsModule } from '@angular/material/tabs'
 import { DataService } from '../../../core/services/data.service';
 import { take } from 'rxjs';
 import { AccordionComponent, AccordionContent, AccordionHeader, AccordionItem, AccordionTitle } from '../../../../../projects/accordion/src/public-api';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
 
 @Component({
   selector: 'content',
@@ -17,20 +26,28 @@ import { AccordionComponent, AccordionContent, AccordionHeader, AccordionItem, A
     AccordionTitle,
     CommonModule,
     FormsModule,
-    MatTabsModule,
+    MatTableModule,
+    MatSortModule,
+    // MatTabsModule,
     ReactiveFormsModule
   ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.sass',
   encapsulation: ViewEncapsulation.None
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, AfterViewInit {
   contentForm: FormGroup
   tokenArray: FormArray
   endgeraeteArray: FormArray
   simArray: FormArray
 
   collapsing = true
+  editable = true
+
+  ELEMENT_DATA: any[] = []
+  dataSource = new MatTableDataSource([])
+  @ViewChild(MatSort) sort!: MatSort
+  tokenColumns: string[] = ['count', 'token_sn']
 
   constructor(private _fb: FormBuilder, private _dataService: DataService) {
 
@@ -43,6 +60,7 @@ export class ContentComponent implements OnInit {
       sim_description: new FormControl('')
     })
     this.tokenArray = <FormArray>this.contentForm.get('token')
+    console.log('TA', this.tokenArray)
     this.endgeraeteArray = <FormArray>this.contentForm.get('endgeraete')
     this.simArray = <FormArray>this.contentForm.get('sim')
   }
@@ -52,20 +70,27 @@ export class ContentComponent implements OnInit {
     .pipe(take(1))
     .subscribe({
       next: (content) => {
-        console.log('content: ', content)
-        this.contentForm.patchValue(content)
-
-        content.token.forEach((token: any) => {
-          this.tokenArray.push(this._fb.group(token))
-        })
-
-        content.endgeraete.forEach((endgeraet: any) => {
-          this.endgeraeteArray.push(this._fb.group(endgeraet))
-        })
-
-        content.sim.forEach((sim: any) => {
-          this.simArray.push(this._fb.group(sim))
-        })
+        if (content) {
+          this.contentForm.patchValue(content)
+  
+          if (content.token && content.token.length >= 0) {
+            content.token.forEach((token: any) => {
+              this.tokenArray.push(this._fb.group(token))
+            })
+          }
+  
+          if (content.endgeraete && content.endgeraete.length >= 0) {
+            content.endgeraete.forEach((endgeraet: any) => {
+              this.endgeraeteArray.push(this._fb.group(endgeraet))
+            })
+          }
+  
+          if (content.sim && content.sim.length >= 0) {
+            content.sim.forEach((sim: any) => {
+              this.simArray.push(this._fb.group(sim))
+            })
+          }
+        }
       }
     })
 
@@ -74,6 +99,10 @@ export class ContentComponent implements OnInit {
         this._dataService.setContent(value)
       }
     })
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort
   }
 
   getTokenArrayLength(): string {
@@ -85,6 +114,8 @@ export class ContentComponent implements OnInit {
       token_sn: ''
     })
     this.tokenArray.push(newToken)
+    console.log('added to array', this.tokenArray.value)
+    this.dataSource.data = this.tokenArray.value
   }
   removeToken(token_id: string) {
     this.tokenArray.removeAt(this.tokenArray.controls.findIndex((control: any) => control.get('token_id').value === token_id))
