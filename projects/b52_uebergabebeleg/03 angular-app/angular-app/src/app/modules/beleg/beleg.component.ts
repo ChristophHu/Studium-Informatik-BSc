@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 
 import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { DataService } from '../../core/services/data.service';
+import { map, Subject, takeUntil, zip } from 'rxjs';
 
 @Component({
   selector: 'app-beleg',
@@ -14,12 +15,15 @@ import { DataService } from '../../core/services/data.service';
   templateUrl: './beleg.component.html',
   styleUrl: './beleg.component.sass'
 })
-export class BelegComponent implements OnInit {
+export class BelegComponent implements OnInit, OnDestroy {
   private pdfMake: any
   // private _consumer: any
+  private prepare: any = { endgeraete: [], sim: [], token: [] }
 
   @ViewChild('pdfViewer') pdfViewer?: any
 
+  destroy$: Subject<boolean> = new Subject<boolean>()
+  
   constructor(private _dataService: DataService) {
     this.pdfMake = pdfMake
   }
@@ -27,18 +31,58 @@ export class BelegComponent implements OnInit {
   ngOnInit(): void {
     this.pdfMake.vfs = pdfFonts.pdfMake.vfs
 
-    this._dataService.consumer$.subscribe({
-      next: (consumer) => {
-        // this._consumer = consumer
-        
-        const pdfDocGenerator = this.pdfMake.createPdf(this.genPdf(consumer))
-        console.log('blob', pdfDocGenerator.getBlob.toString())
-        pdfDocGenerator.getBlob((blob:Blob) => {
-          this.pdfViewer.pdfSrc = blob
-          this.pdfViewer.refresh()
-        })
+    zip(this._dataService.consumer$, this._dataService.content$)
+    .pipe(
+      takeUntil(this.destroy$),
+      map(([consumer, content]) => ({ consumer, content }))
+    )
+    .subscribe({
+      next: (data) => {
+        if (data) {
+          this.prepare.endgeraete = this.prepareEndgeraete(data.content)
+          this.prepare.sim = this.prepareSim(data.content)
+          this.prepare.token = this.prepareToken(data.content)
+                  
+          console.log('data: ', data)
+          const pdfDocGenerator = this.pdfMake.createPdf(this.genPdf(data.consumer))
+          console.log('blob', pdfDocGenerator.getBlob.toString())
+          pdfDocGenerator.getBlob((blob:Blob) => {
+            this.pdfViewer.pdfSrc = blob
+            this.pdfViewer.refresh()
+          })
+        }
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true)
+    this.destroy$.unsubscribe()
+  }
+
+  prepareEndgeraete(content: any): any[] {
+    const result: any[] = []
+    content.endgeraete.forEach((endgeraet: any, index: number) => {
+      result.push([{ text:  index + 1 + '.'}, endgeraet.imei, endgeraet.modell ,endgeraet.ausstattung ])
+    })
+    result.push([{ colSpan: 4, text: 'Beschreibung: ' + content.endgeraete_description }, {}, {}])
+    return result                 
+  }
+  prepareSim(content: any): any[] {
+    const result: any[] = []
+    content.sim.forEach((sim: any, index: number) => {
+      result.push([{ text:  index + 1 + '.'}, sim.sn, sim.rufnummer, sim.pin, sim.puk])
+    })
+    result.push([{ colSpan: 5, text: 'Beschreibung: ' + content.sim_description }, {}, {}, {}])
+    return result                 
+  }
+  prepareToken(content: any): any[] {
+    const result: any[] = []
+    content.token.forEach((token: any, index: number) => {
+      result.push([{ text:  index + 1 + '.'}, token.token_sn])
+    })
+    result.push([{ colSpan: 2, text: 'Beschreibung: ' + content.token_description }, {}])
+    return result                 
   }
 
   genPdf(consumer: any) {
@@ -179,6 +223,65 @@ export class BelegComponent implements OnInit {
             },
           ]
         },
+        { text: 'Übergebene Gegenstände', style: 'subheader', margin: [ 0, 12, 0, 4 ] },
+        
+        {
+          unbreakable: true,
+          stack: [
+            { text: 'Endgeräte', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
+
+            {
+              style: 'default',
+              table: {
+                widths: [18, '*', '*', '*'],
+                body: [
+                  [{ text: 'Nr.', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'IMEI', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'Modell', style: 'tableHeader', fillColor: '#eeeeee' }, { text: 'Ausstattung', fillColor: '#eeeeee' }],
+                  ...this.prepare.endgeraete
+                ]
+              },
+            },
+          ]
+        },
+
+        // ng new angular-app --create-application=false
+
+        {
+          unbreakable: true,
+          stack: [
+            { text: 'SIM', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
+
+            {
+              style: 'default',
+              table: {
+                widths: [18, '*', '*', '*', '*'],
+                body: [
+                  [{ text: 'Nr.', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'S/N', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'Rufnummer', style: 'tableHeader', fillColor: '#eeeeee' }, { text: 'PIN', style: 'tableHeader', fillColor: '#eeeeee' }, { text: 'PUK', fillColor: '#eeeeee' }],
+                  // [{ text: '1.'}, 'SN123456789', '0176 212 512 82', '1234', '8765321'],
+                  // [{ colSpan: 5, text: 'Beschreibung: ' }, {}, {}, {}]
+                  ...this.prepare.sim
+                ]
+              },
+            },
+          ]
+        },
+
+        {
+          unbreakable: true,
+          stack: [
+            { text: 'Tokens', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
+
+            {
+              style: 'default',
+              table: {
+                widths: [18, '*'],
+                body: [
+                  [{ text: 'Nr.', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'S/N', style: 'tableHeader', fillColor: '#eeeeee' }],
+                  ...this.prepare.token
+                ]
+              },
+            },
+          ]
+        }
       ],
 
       styles: {

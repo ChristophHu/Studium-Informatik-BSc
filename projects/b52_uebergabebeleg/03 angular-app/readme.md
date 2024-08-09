@@ -9,5 +9,5 @@
 - [ ] Versendung per Mail,
 
 - [ ] Styling der MatTabs,
-- [ ] Scrolling bei overflow defekt,
+- [x] Scrolling bei overflow defekt,
 - [ ] Splashscreen

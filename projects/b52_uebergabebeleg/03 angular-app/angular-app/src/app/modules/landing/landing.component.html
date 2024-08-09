@@ -4,9 +4,6 @@
 </header> -->
 
 <div>
-  <button (click)="genPdf()">
-    PdfGenerieren
-  </button>
   <consumer></consumer>
   <content></content>
   <div class="m-2">
@@ -14,5 +11,10 @@
       <label class="nxt_button_label my-2 text-sm leading-none">Unterschrift</label>
       <nxt-signature formControlName="sign"></nxt-signature>
     </div>
+  </div>
+  <div class="absolute right-0 left-0 p-2">
+    <button class="w-full p-2 bg-accent text-white rounded" (click)="genPdf()">
+      Beleg generieren
+    </button>
   </div>
 </div>
