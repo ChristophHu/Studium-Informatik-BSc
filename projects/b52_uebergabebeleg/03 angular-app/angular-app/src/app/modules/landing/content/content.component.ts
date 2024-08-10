@@ -45,9 +45,12 @@ export class ContentComponent implements OnInit, AfterViewInit {
   editable = true
 
   // ELEMENT_DATA: any[] = [{ count: 1, token_id: this.generateGUID(), token_sn: ''}]
-  dataSource = new MatTableDataSource([])
-  @ViewChild(MatSort) sort!: MatSort
+  endgeraeteDataSource = new MatTableDataSource([])
+  simDataSource = new MatTableDataSource([])
+  tokenDataSource = new MatTableDataSource([])
+  // @ViewChild(MatSort) sort!: MatSort
   tokenColumns: string[] = ['count', 'token_sn']
+  endgeraeteColumns: string[] = ['count', 'token_sn']
 
   constructor(private _fb: FormBuilder, private _dataService: DataService) {
 
@@ -60,7 +63,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
       sim_description: new FormControl('')
     })
     this.tokenArray = <FormArray>this.contentForm.get('token')
-    console.log('TA', this.tokenArray)
     this.endgeraeteArray = <FormArray>this.contentForm.get('endgeraete')
     this.simArray = <FormArray>this.contentForm.get('sim')
   }
@@ -76,19 +78,21 @@ export class ContentComponent implements OnInit, AfterViewInit {
           if (content.token && content.token.length >= 0) {
             content.token.forEach((token: any) => {
               this.tokenArray.push(this._fb.group(token))
-              this.dataSource.data = this.tokenArray.value
+              this.tokenDataSource.data = this.tokenArray.value
             })
           }
   
           if (content.endgeraete && content.endgeraete.length >= 0) {
             content.endgeraete.forEach((endgeraet: any) => {
               this.endgeraeteArray.push(this._fb.group(endgeraet))
+              this.endgeraeteDataSource.data = this.endgeraeteArray.value
             })
           }
   
           if (content.sim && content.sim.length >= 0) {
             content.sim.forEach((sim: any) => {
               this.simArray.push(this._fb.group(sim))
+              this.simDataSource.data = this.simArray.value
             })
           }
         }
@@ -103,7 +107,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort
+    // this.tokenDataSource.sort = this.sort
   }
 
   getTokenArrayLength(): string {
@@ -115,7 +119,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       token_sn: ''
     })
     this.tokenArray.push(newToken)
-    this.dataSource.data = this.tokenArray.value
+    this.tokenDataSource.data = this.tokenArray.value
   }
   removeToken(token_id: string) {
     this.tokenArray.removeAt(this.tokenArray.controls.findIndex((control: any) => control.get('token_id').value === token_id))
@@ -131,6 +135,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       imei: ''
     })
     this.endgeraeteArray.push(newEndgeraet)
+    this.endgeraeteDataSource.data = this.endgeraeteArray.value
   }
   removeEndgeraet(endgeraet_id: string) {
     this.endgeraeteArray.removeAt(this.endgeraeteArray.controls.findIndex((control: any) => control.get('endgeraet_id').value === endgeraet_id))
@@ -147,6 +152,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       puk: ''
     })
     this.simArray.push(newSim)
+    this.simDataSource.data = this.simArray.value
   }
   removeSim(sim_id: string) {
     this.simArray.removeAt(this.simArray.controls.findIndex((control: any) => control.get('sim_id').value === sim_id))
