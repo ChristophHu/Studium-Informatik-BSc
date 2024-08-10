@@ -44,7 +44,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   collapsing = true
   editable = true
 
-  ELEMENT_DATA: any[] = []
+  // ELEMENT_DATA: any[] = [{ count: 1, token_id: this.generateGUID(), token_sn: ''}]
   dataSource = new MatTableDataSource([])
   @ViewChild(MatSort) sort!: MatSort
   tokenColumns: string[] = ['count', 'token_sn']
@@ -76,6 +76,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
           if (content.token && content.token.length >= 0) {
             content.token.forEach((token: any) => {
               this.tokenArray.push(this._fb.group(token))
+              this.dataSource.data = this.tokenArray.value
             })
           }
   
@@ -114,7 +115,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
       token_sn: ''
     })
     this.tokenArray.push(newToken)
-    console.log('added to array', this.tokenArray.value)
     this.dataSource.data = this.tokenArray.value
   }
   removeToken(token_id: string) {
