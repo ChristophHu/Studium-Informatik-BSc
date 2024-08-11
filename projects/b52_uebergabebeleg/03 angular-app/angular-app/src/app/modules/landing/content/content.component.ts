@@ -48,7 +48,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
  * 
  * @type {boolean} isVisible - The isVisible property.
  */
-  isVisible: boolean = false
+  isVisible: boolean = true
   isSpinnerVisible: boolean = true
   isCheckedAll: boolean = false
 
@@ -121,6 +121,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+
     this._dataService.content$
     .pipe(take(1))
     .subscribe({

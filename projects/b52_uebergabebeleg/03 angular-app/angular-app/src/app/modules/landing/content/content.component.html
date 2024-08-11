@@ -4,11 +4,10 @@
         <accordion [collapsing]="collapsing">
             <accordion-item title="Token" [expanded]="false">
               <ng-template accordionContent>
-                <circular-spinner></circular-spinner>
-                <div class="relative flex-auto w-full overflow-y-auto scrollbar-hide">
-                    <dynamic-table [tableoptions]="tableoptions" [data$]="data$" [pageSize]="4" (action)="returnTableAction($event)" [isEditableInTable]="true"></dynamic-table>
+                <div class="relative flex-auto w-full p-2 overflow-y-auto scrollbar-hide">
+                    <!-- <dynamic-table [tableoptions]="tableoptions" [data$]="data$" [pageSize]="4" (action)="returnTableAction($event)" [isEditableInTable]="true"></dynamic-table> -->
 
-                    <!-- @defer (when isVisible; prefetch on timer(1000ms)) {
+                    @defer (when isVisible; prefetch on timer(1000ms)) {
                         <div class="bg-tertiary">
                             <dynamic-table [tableoptions]="tableoptions" [data$]="data$" [pageSize]="4" (action)="returnTableAction($event)" [isEditableInTable]="true"></dynamic-table>
                         </div>
@@ -23,7 +22,7 @@
                     }
                     @error {
                         <div class="h-4 bg-tertiary">Error</div>
-                    } -->
+                    }
                     <!-- <div class="debug-item-hide bg-tertiary text-dark text-xs border-t border-borderline">
                       <pre class="p-2 bg-gradient-45 to-gray-600">{{ (easydata$ | async) | json }}</pre>
                     </div> -->
