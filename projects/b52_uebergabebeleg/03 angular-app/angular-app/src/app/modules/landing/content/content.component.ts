@@ -1,12 +1,15 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { MatTabsModule } from '@angular/material/tabs'
 import { DataService } from '../../../core/services/data.service';
-import { take } from 'rxjs';
+import { BehaviorSubject, Observable, of, take } from 'rxjs';
 import { AccordionComponent, AccordionContent, AccordionHeader, AccordionItem, AccordionTitle } from '../../../../../projects/accordion/src/public-api';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { NgxDynamicTableComponent, TableActionEnum, TableActionReturn, Tableoptions } from '@christophhu/ngx-dynamic-table';
+import { CircularSpinnerComponent } from '../../../shared/components/circular-spinner/circular-spinner.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 export interface PeriodicElement {
   name: string;
@@ -24,7 +27,10 @@ export interface PeriodicElement {
     AccordionContent,
     AccordionHeader,
     AccordionTitle,
+    CircularSpinnerComponent,
     CommonModule,
+    MatMenuModule,
+    NgxDynamicTableComponent,
     FormsModule,
     MatTableModule,
     MatSortModule,
@@ -36,6 +42,51 @@ export interface PeriodicElement {
   encapsulation: ViewEncapsulation.None
 })
 export class ContentComponent implements OnInit, AfterViewInit {
+  /**
+ * The isVisible property belongs to the data of the dynamic-table.
+ * It is used to show or hide the table, depended on the data.
+ * 
+ * @type {boolean} isVisible - The isVisible property.
+ */
+  isVisible: boolean = false
+  isSpinnerVisible: boolean = true
+  isCheckedAll: boolean = false
+
+  private readonly _data = new BehaviorSubject<any[]>([])
+  data$: Observable<any[]> = this._data.asObservable()
+  
+  data: any = [
+    { id: '1', name: 'Tim', date: '01.01.2024 00:00:59', ort: 'Berlin', checked: false, description: 'Test1' },
+    { id: '2', name: 'Tom', date: '01.01.2023 00:00:59', ort: 'Hamburg', checked: false, description: 'Test2' },
+    { id: '3', name: 'Thomas', date: '01.02.2023 00:00:59', ort: 'Dresden', checked: false, description: 'Test3' },
+    { id: '4', name: 'Martin', date: '03.02.2023 00:00:59', ort: 'München', checked: false, description: 'Halllo1' },
+    { id: '5', name: 'Markus', date: '04.02.2023 00:00:59', ort: 'Köln', checked: false, description: 'Hallo2' }
+  ]
+
+  tableoptions: Tableoptions = {
+    actions: [
+      { name: 'delete', icon: 'trash', action: 1 },
+      { name: 'edit', icon: 'edit', action: 2 },
+      { name: 'show', icon: 'eye', action: 4 }
+    ],
+    columns: [
+      { id: '1', name: 'id', header: 'ID', cell: 'id', hidden: true, sortable: true },
+      { id: '2', name: 'name', header: 'Name', cell: 'name', hidden: false, sortable: true },
+      { id: '3', name: 'date', header: 'Datum/Zeit', cell: 'date', pipe: { name: DatePipe, args: 'dd.MM.YYYY HH:mm:ss'}, hidden: false, sortable: true },
+      { id: '4', name: 'ort', header: 'Ort', cell: 'ort', hidden: false, sortable: true },
+    ],
+    columnFilter: ['name', 'date', 'ort', 'description'],
+    columnNames: ['name', 'date', 'ort'],
+    isExpandable: true,
+    checkbox: true,
+    count: false,
+    paginator: true,
+    sortRowManual: false,
+    unread: false,
+    sortColumn: 'date',
+    sortStart: 'asc'
+  }
+  
   contentForm: FormGroup
   tokenArray: FormArray
   endgeraeteArray: FormArray
@@ -49,8 +100,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
   simDataSource = new MatTableDataSource([])
   tokenDataSource = new MatTableDataSource([])
   // @ViewChild(MatSort) sort!: MatSort
-  tokenColumns: string[] = ['checkbox', 'count', 'token_sn', 'actions']
-  endgeraeteColumns: string[] = ['checkbox', 'count', 'token_sn', 'actions']
+  // tokenColumns: string[] = ['checkbox', 'count', 'token_sn', 'actions']
+  endgeraeteColumns: string[] = ['count', 'token_sn']
 
   constructor(private _fb: FormBuilder, private _dataService: DataService) {
 
@@ -65,6 +116,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
     this.tokenArray = <FormArray>this.contentForm.get('token')
     this.endgeraeteArray = <FormArray>this.contentForm.get('endgeraete')
     this.simArray = <FormArray>this.contentForm.get('sim')
+
+    this.setData()
   }
 
   ngOnInit(): void {
@@ -108,6 +161,50 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     // this.tokenDataSource.sort = this.sort
+  }
+
+  /**
+ * @param {TableActionReturn} event  The target to process
+ * @returns The processed target number
+ */
+  returnTableAction(event: TableActionReturn) {
+    switch (event.action) {
+      case TableActionEnum.DELETE:
+        console.log('delete row')
+        break
+      case TableActionEnum.EDIT:
+        console.log('edit row')
+        break
+      case TableActionEnum.SHOW:
+        console.log('show row')
+        break
+      case TableActionEnum.REFRESH:
+        console.log('refresh table')
+        // this.setData()
+        break
+      case TableActionEnum.CHECK:
+        console.log('check row', event.row)
+        break
+      case TableActionEnum.CHECKALL:
+        console.log('check all rows')
+        this.isCheckedAll = !this.isCheckedAll
+        this._data.value.forEach((row: any) => {
+          row.checked = this.isCheckedAll
+        })
+        break
+      default:
+        console.log('default action')
+    }
+  }
+  /**
+ * @ignore
+ */
+  setData() {
+    this._data.next(this.data)
+  }
+
+  refreshTable() {
+    this._data.next(this.data)
   }
 
   getTokenArrayLength(): string {

@@ -32,7 +32,8 @@
             ],
             "styles": [
               "src/custom-theme.scss",
-              "src/styles.sass"
+              "src/styles.sass",
+              "node_modules/@christophhu/ngx-dynamic-table/lib/style/ngx-dynamic-table-tw.scss"
             ],
             "scripts": []
           },

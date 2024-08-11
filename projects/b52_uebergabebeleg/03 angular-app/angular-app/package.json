@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@christophhu/ngx-json-form": "^1.0.5",
+    "@christophhu/ngx-dynamic-table": "^1.0.4",
     "lodash-es": "^4.17.21",
     "ng2-pdfjs-viewer": "^17.0.3",
     "pdfjs-dist": "^4.2.67",

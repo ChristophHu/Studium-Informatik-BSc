@@ -125,3 +125,103 @@ input, textarea
     .nxt_input_action_icon
         @apply text-icon
 
+
+*
+    @apply ring-0 ring-offset-0 outline-none
+
+.mat-column-count
+    @apply w-16 pr-4 justify-center bg-white
+
+.mat-column-actions
+    @apply w-20 justify-center
+
+    button
+        @apply mx-auto
+
+.mat-column-expand
+    @apply w-16 justify-center
+
+    button
+        @apply mx-auto
+
+
+// .mat-mdc-table
+//     @apply bg-tertiary #{!important}
+
+.mat-mdc-header-row
+    @apply bg-tertiary text-darker #{!important}
+
+// .mat-mdc-row
+//     @apply border-t border-borderline #{!important}
+
+// .mdc-data-table__row
+//     @apply border-t border-borderline #{!important}
+
+.mat-mdc-header-cell
+    @apply border-none border-b border-2 border-borderline border-2 #{!important}
+
+.mat-column-checkbox
+    @apply m-0 p-0 w-8 #{!important}
+
+.mat-column-count
+    @apply bg-transparent #{!important}
+
+.mat-mdc-row
+    @apply bg-tertiary text-dark #{!important}
+
+.mat-mdc-cell
+    @apply border-t border-light #{!important}
+
+// paginator
+.mat-mdc-paginator
+    @apply bg-tertiary text-dark text-lg #{!important}
+
+    .mdc-text-field
+        // @apply text-dark #{!important}
+
+    .mdc-text-field--outlined
+        // @apply outline-none border-borderline #{!important}
+
+    .mat-mdc-select
+        @apply text-dark #{!important}
+
+    .mat-mdc-select-arrow
+        @apply text-dark #{!important}
+
+    .mdc-notched-outline__leading, .mdc-notched-outline__notch, .mdc-notched-outline__trailing
+        @apply border-borderline border #{!important}
+
+    .mat-paginator-navigation-previous
+        display: none !important
+
+    .mat-paginator-navigation-next
+        display: none !important
+
+.mat-mdc-paginator-range-actions
+    @apply text-dark text-sm #{!important}
+
+    .mat-mdc-paginator-icon
+        @apply fill-dark #{!important}
+
+.mat-mdc-paginator-container
+    @apply p-0 #{!important}
+    
+// bubble-pagination
+.nxt-bubble-container
+    @apply flex gap-2
+
+.nxt-bubble
+    @apply flex h-8 w-8 bg-light items-center justify-center text-darker text-sm rounded-full cursor-pointer duration-300
+
+.nxt-bubble:hover
+    @apply bg-static_gray text-dark
+
+.nxt-bubble__active
+    @apply bg-accent
+
+.nxt-bubble__disabled
+    @apply bg-disabled cursor-default pointer-events-none
+
+// tooltip
+mat-tooltip-component
+  display: none !important
