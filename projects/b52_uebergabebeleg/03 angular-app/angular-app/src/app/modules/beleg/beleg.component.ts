@@ -18,7 +18,7 @@ import { map, Subject, takeUntil, zip } from 'rxjs';
 export class BelegComponent implements OnInit, OnDestroy {
   private pdfMake: any
   // private _consumer: any
-  private prepare: any = { endgeraete: [], sim: [], token: [] }
+  private prepare: any = { endgeraete: [], sim: [], token: [], tokenInformation: [] }
 
   @ViewChild('pdfViewer') pdfViewer?: any
 
@@ -42,6 +42,7 @@ export class BelegComponent implements OnInit, OnDestroy {
           this.prepare.endgeraete = this.prepareEndgeraete(data.content)
           this.prepare.sim = this.prepareSim(data.content)
           this.prepare.token = this.prepareToken(data.content)
+          this.prepare.tokenInformation = this.prepareTokenInformation(data.content)
                   
           console.log('data: ', data)
           const pdfDocGenerator = this.pdfMake.createPdf(this.genPdf(data.consumer))
@@ -83,6 +84,17 @@ export class BelegComponent implements OnInit, OnDestroy {
     })
     result.push([{ colSpan: 2, text: 'Beschreibung: ' + content.token_description }, {}])
     return result                 
+  }
+  prepareTokenInformation(content: any): any {
+    if (content.token.length === 0) {
+      return []
+    } else {
+      return [
+        { text: 'Die empfangenen Transponder sind personengebunden und dürfen nicht an andere Personen weitergegeben werden. Dienststellenwechsel, Namensänderungen und Änderungen der Funktion sind unaufgefordert an Dir ZS IKT B 333 zu melden. Bei Beendigung des Dienstverhältnisses ist der Transponder an Dir ZS IKT B 333 zurückzugeben.', margin: [ 0, 12, 0, 4 ] },
+        { text: 'Im Verlustfall ist unverzüglich der ServiceDesk unter der Rufnummer 030 4664 777 777, intern 777 777 zu informieren.', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
+        { text: 'Der Verlust kann die Einleitung disziplinarischer Maßnahmen zu Folge haben. Gemäß der GA "ZSE I Nr. 08/2007 über Verbleib und Verwertung beweglicher Sachen, die nicht zum Vermögen gehören (Nr. 13 AV § 73 LHO)" kann bei Verlust oder Beschädigung ein Regressverfahren eingeleitet werden.', margin: [ 0, 4, 0, 4 ] }
+      ]
+    }
   }
 
   genPdf(consumer: any) {
@@ -281,7 +293,8 @@ export class BelegComponent implements OnInit, OnDestroy {
               },
             },
           ]
-        }
+        },
+        ...this.prepare.tokenInformation
       ],
 
       styles: {

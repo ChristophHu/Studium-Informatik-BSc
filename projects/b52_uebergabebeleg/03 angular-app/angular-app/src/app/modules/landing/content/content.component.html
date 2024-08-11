@@ -14,6 +14,22 @@
                             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">Nr.</th>
                             <td mat-cell *matCellDef="let row; let index = index"> {{ index + 1 }}. </td>
                         </ng-container>
+                        <ng-container matColumnDef="checkbox">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <div class="p-2">
+                                    <div class="w-5 h-5 bg-light rounded-sm" (click)="checkAll()">
+                                        <input type="checkbox" class="w-full h-full focus:outline-none cursor-pointer" />
+                                    </div>
+                                </div>
+                            </th>
+                            <td mat-cell *matCellDef="let element; let i = index">
+                                <div class="p-2">
+                                    <div class="w-5 h-5 bg-light rounded-sm" (click)="check(element)">
+                                        <input type="checkbox" class="w-full h-full focus:outline-none cursor-pointer" [checked]="element['checked']"/>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
 
                         <!-- <ng-container matColumnDef="token_id">
                           <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -28,13 +44,20 @@
                             <input type="text" formControlName="token_sn">
                           </td>
                         </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef>Actions</th>
+                            <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                            <div class="h-6 w-6 cursor-pointer" (click)="removeToken(row.token_id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>                                  
+                            </div>
+                            </td>
+                          </ng-container>
                     </table>
-                    <button class="flex flex-row w-full p-2 text-accent items-center rounded shadow-lg" (click)="addToken()">
+                    <button class="bg-white flex flex-row w-full p-2 text-accent items-center justify-center rounded-b shadow-lg" (click)="addToken()">
                         <div class="h-6 w-6 stroke-2">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                         </div>
                         <span>Token hinzufügen</span>
-                        
                     </button>
                     <!-- <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
                         <ng-container *ngFor="let column of tokenColumns" matColumnDef="{{ column }}" class="relative">

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { MatTabsModule } from '@angular/material/tabs'
 import { DataService } from '../../../core/services/data.service';
 import { take } from 'rxjs';
 import { AccordionComponent, AccordionContent, AccordionHeader, AccordionItem, AccordionTitle } from '../../../../../projects/accordion/src/public-api';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 
 export interface PeriodicElement {
   name: string;
@@ -49,8 +49,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
   simDataSource = new MatTableDataSource([])
   tokenDataSource = new MatTableDataSource([])
   // @ViewChild(MatSort) sort!: MatSort
-  tokenColumns: string[] = ['count', 'token_sn']
-  endgeraeteColumns: string[] = ['count', 'token_sn']
+  tokenColumns: string[] = ['checkbox', 'count', 'token_sn', 'actions']
+  endgeraeteColumns: string[] = ['checkbox', 'count', 'token_sn', 'actions']
 
   constructor(private _fb: FormBuilder, private _dataService: DataService) {
 
@@ -123,6 +123,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
   removeToken(token_id: string) {
     this.tokenArray.removeAt(this.tokenArray.controls.findIndex((control: any) => control.get('token_id').value === token_id))
+    this.tokenDataSource.data = this.tokenArray.value
   }
   getEndgeraeteArrayLength(): string {
     return this.endgeraeteArray.controls.length.toString()
@@ -156,6 +157,15 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
   removeSim(sim_id: string) {
     this.simArray.removeAt(this.simArray.controls.findIndex((control: any) => control.get('sim_id').value === sim_id))
+  }
+  check(row: any) {
+    // this.action.emit({ row, action: TableActionEnum.CHECK })
+  }
+  checkAll() {
+    // this.action.emit({ action: TableActionEnum.CHECKALL })
+  }
+  refresh() {
+    // this.action.emit({ action: TableActionEnum.REFRESH })
   }
 
   generateGUID(): string {
