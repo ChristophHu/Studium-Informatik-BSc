@@ -13,6 +13,9 @@ export class DataService {
   private readonly _content = new BehaviorSubject<any>({})
   content$: Observable<any> = this._content.asObservable()
 
+  private readonly _signature = new BehaviorSubject<any>({})
+  signature$: Observable<any> = this._signature.asObservable()
+
   constructor() { }
 
   setConsumer(consumer: any) {
@@ -21,5 +24,9 @@ export class DataService {
 
   setContent(content: any) {
     this._content.next(content)
+  }
+
+  setSignature(signature: any) {
+    this._signature.next(signature)
   }
 }

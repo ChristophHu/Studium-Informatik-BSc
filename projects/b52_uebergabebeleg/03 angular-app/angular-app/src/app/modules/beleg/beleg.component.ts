@@ -31,10 +31,10 @@ export class BelegComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.pdfMake.vfs = pdfFonts.pdfMake.vfs
 
-    zip(this._dataService.consumer$, this._dataService.content$)
+    zip(this._dataService.consumer$, this._dataService.content$, this._dataService.signature$)
     .pipe(
       takeUntil(this.destroy$),
-      map(([consumer, content]) => ({ consumer, content }))
+      map(([consumer, content, signature]) => ({ consumer, content, signature }))
     )
     .subscribe({
       next: (data) => {
@@ -45,7 +45,7 @@ export class BelegComponent implements OnInit, OnDestroy {
           this.prepare.tokenInformation = this.prepareTokenInformation(data.content)
                   
           console.log('data: ', data)
-          const pdfDocGenerator = this.pdfMake.createPdf(this.genPdf(data.consumer))
+          const pdfDocGenerator = this.pdfMake.createPdf(this.genPdf(data.consumer, data.signature))
           console.log('blob', pdfDocGenerator.getBlob.toString())
           pdfDocGenerator.getBlob((blob:Blob) => {
             this.pdfViewer.pdfSrc = blob
@@ -62,28 +62,99 @@ export class BelegComponent implements OnInit, OnDestroy {
   }
 
   prepareEndgeraete(content: any): any[] {
-    const result: any[] = []
-    content.endgeraete.forEach((endgeraet: any, index: number) => {
-      result.push([{ text:  index + 1 + '.'}, endgeraet.imei, endgeraet.modell ,endgeraet.ausstattung ])
-    })
-    result.push([{ colSpan: 4, text: 'Beschreibung: ' + content.endgeraete_description }, {}, {}])
-    return result                 
+    if (content.endgeraete.length === 0) {
+      return []
+    } else {
+      const result: any[] = []
+      content.endgeraete.forEach((endgeraet: any, index: number) => {
+        result.push([{ text:  index + 1 + '.'}, endgeraet.modell, endgeraet.imei, endgeraet.ausstattung ])
+      })
+      result.push([{ colSpan: 4, text: 'Bemerkungen: ' + content.endgeraete_description }, {}, {}])
+
+      return [
+        {
+          unbreakable: true,
+          stack: [
+            { text: 'Endgeräte', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
+
+            {
+              style: 'default',
+              table: {
+                widths: [18, '*', '*', '*'],
+                body: [
+                  [{ text: 'Nr.', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'Modell', style: 'tableHeader', fillColor: '#eeeeee' }, { text: 'IMEI', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'Ausstattung', fillColor: '#eeeeee' }],
+                  ...result
+                ]
+              },
+            },
+          ]
+        }
+      ]
+    }               
   }
   prepareSim(content: any): any[] {
-    const result: any[] = []
-    content.sim.forEach((sim: any, index: number) => {
-      result.push([{ text:  index + 1 + '.'}, sim.sn, sim.rufnummer, sim.pin, sim.puk])
-    })
-    result.push([{ colSpan: 5, text: 'Beschreibung: ' + content.sim_description }, {}, {}, {}])
-    return result                 
+    if (content.sim.length === 0) {
+      return []
+    } else {
+      const result: any[] = []
+      content.sim.forEach((sim: any, index: number) => {
+        result.push([{ text:  index + 1 + '.'}, sim.sn, sim.rufnummer, sim.pin, sim.puk])
+      })
+      result.push([{ colSpan: 5, text: 'Bemerkungen: ' + content.sim_description }, {}, {}, {}])
+      
+      return [
+        {
+          unbreakable: true,
+          stack: [
+            { text: 'SIM', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
+    
+            {
+              style: 'default',
+              table: {
+                widths: [18, '*', '*', '*', '*'],
+                body: [
+                  [{ text: 'Nr.', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'S/N', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'Rufnummer', style: 'tableHeader', fillColor: '#eeeeee' }, { text: 'PIN', style: 'tableHeader', fillColor: '#eeeeee' }, { text: 'PUK', fillColor: '#eeeeee' }],
+                  // [{ text: '1.'}, 'SN123456789', '0176 212 512 82', '1234', '8765321'],
+                  // [{ colSpan: 5, text: 'Beschreibung: ' }, {}, {}, {}]
+                  ...result
+                ]
+              },
+            },
+          ]
+        }
+      ]
+    }
   }
   prepareToken(content: any): any[] {
-    const result: any[] = []
-    content.token.forEach((token: any, index: number) => {
-      result.push([{ text:  index + 1 + '.'}, token.token_sn])
-    })
-    result.push([{ colSpan: 2, text: 'Beschreibung: ' + content.token_description }, {}])
-    return result                 
+    if (content.token.length === 0) {
+      return []
+    } else {
+      const result: any[] = []
+      content.token.forEach((token: any, index: number) => {
+        result.push([{ text:  index + 1 + '.'}, token.token_sn])
+      })
+      result.push([{ colSpan: 2, text: 'Bemerkungen: ' + content.token_description }, {}])
+
+      return [
+        {
+          unbreakable: true,
+          stack: [
+            { text: 'Tokens', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
+
+            {
+              style: 'default',
+              table: {
+                widths: [18, '*'],
+                body: [
+                  [{ text: 'Nr.', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'S/N', style: 'tableHeader', fillColor: '#eeeeee' }],
+                  ...result
+                ]
+              },
+            },
+          ]
+        }
+      ]
+    }
   }
   prepareTokenInformation(content: any): any {
     if (content.token.length === 0) {
@@ -97,7 +168,7 @@ export class BelegComponent implements OnInit, OnDestroy {
     }
   }
 
-  genPdf(consumer: any) {
+  genPdf(consumer: any, signature: any): any {
     return {
       pageSize: 'A4',
       pageOrientation: 'p',
@@ -237,64 +308,26 @@ export class BelegComponent implements OnInit, OnDestroy {
         },
         { text: 'Übergebene Gegenstände', style: 'subheader', margin: [ 0, 12, 0, 4 ] },
         
-        {
-          unbreakable: true,
-          stack: [
-            { text: 'Endgeräte', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
-
-            {
-              style: 'default',
-              table: {
-                widths: [18, '*', '*', '*'],
-                body: [
-                  [{ text: 'Nr.', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'IMEI', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'Modell', style: 'tableHeader', fillColor: '#eeeeee' }, { text: 'Ausstattung', fillColor: '#eeeeee' }],
-                  ...this.prepare.endgeraete
-                ]
-              },
-            },
-          ]
-        },
-
-        // ng new angular-app --create-application=false
+        this.prepare.endgeraete,
+        ...this.prepare.sim,
+        ...this.prepare.token,
+        ...this.prepare.tokenInformation,
 
         {
           unbreakable: true,
           stack: [
-            { text: 'SIM', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
-
             {
               style: 'default',
               table: {
-                widths: [18, '*', '*', '*', '*'],
+                widths: [200],
                 body: [
-                  [{ text: 'Nr.', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'S/N', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'Rufnummer', style: 'tableHeader', fillColor: '#eeeeee' }, { text: 'PIN', style: 'tableHeader', fillColor: '#eeeeee' }, { text: 'PUK', fillColor: '#eeeeee' }],
-                  // [{ text: '1.'}, 'SN123456789', '0176 212 512 82', '1234', '8765321'],
-                  // [{ colSpan: 5, text: 'Beschreibung: ' }, {}, {}, {}]
-                  ...this.prepare.sim
+                  [{ image: signature.sign, fit: [100 * 2.54, 100 * 2.54], border: [false, false, false, true] }],
+                  [{ text: new Date().toLocaleDateString() + ', Berlin, ' + consumer.name, style: 'signature', border: [false, true, false, false] }]
                 ]
               },
             },
           ]
-        },
-
-        {
-          unbreakable: true,
-          stack: [
-            { text: 'Tokens', style: 'subheader', margin: [ 0, 4, 0, 4 ] },
-
-            {
-              style: 'default',
-              table: {
-                widths: [18, '*'],
-                body: [
-                  [{ text: 'Nr.', style: 'tableHeader', fillColor: '#eeeeee'}, { text: 'S/N', style: 'tableHeader', fillColor: '#eeeeee' }],
-                  ...this.prepare.token
-                ]
-              },
-            },
-          ]
-        },
-        ...this.prepare.tokenInformation
+        }        
       ],
 
       styles: {
