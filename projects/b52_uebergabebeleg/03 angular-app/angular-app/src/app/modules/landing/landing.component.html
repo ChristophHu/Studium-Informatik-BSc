@@ -15,7 +15,7 @@
   <pre class="debug-item-hide m-2 p-2 bg-blue-200 rounded">{{ signature.value | json }}</pre>
   <hr class="mt-4 h-px bg-light border-none">
   <div class="absolute right-0 left-0 p-2">
-    <button class="w-full p-2 bg-accent text-white rounded" (click)="genPdf()">
+    <button class="w-full p-2 bg-accent text-white disabled:bg-gray-500 rounded" [disabled]="!isValidated" (click)="generatePdf()">
       Beleg generieren
     </button>
   </div>

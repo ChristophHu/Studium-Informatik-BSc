@@ -44,9 +44,8 @@ export class BelegComponent implements OnInit, OnDestroy {
           this.prepare.token = this.prepareToken(data.content)
           this.prepare.tokenInformation = this.prepareTokenInformation(data.content)
                   
-          console.log('data: ', data)
           const pdfDocGenerator = this.pdfMake.createPdf(this.genPdf(data.consumer, data.signature))
-          console.log('blob', pdfDocGenerator.getBlob.toString())
+
           pdfDocGenerator.getBlob((blob:Blob) => {
             this.pdfViewer.pdfSrc = blob
             this.pdfViewer.refresh()

@@ -28,7 +28,6 @@ export class LayoutComponent {
     let route = this._activatedRoute
     const layoutFromQueryParam = (route.snapshot.queryParamMap.get('layout') as Layout);
     if ( layoutFromQueryParam ) {
-      console.log(layoutFromQueryParam)
       this.layout = layoutFromQueryParam
     } else {
       this.layout = 'mobile'

@@ -5,7 +5,8 @@ import { SignatureComponent } from '../../shared/components/signature/signature.
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { DataService } from '../../core/services/data.service';
-import { take } from 'rxjs';
+import { Subject, take } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
@@ -16,15 +17,19 @@ import { take } from 'rxjs';
     FormsModule,
     JsonPipe,
     SignatureComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.sass'
 })
 export class LandingComponent {
+  isValidated: boolean = false
   signature: FormGroup
 
-  constructor(private _dataService: DataService) {
+  destroy$: Subject<boolean> = new Subject<boolean>()
+
+  constructor(private _dataService: DataService, private _router: Router) {
     this.signature = new FormGroup({
       sign: new FormControl()
     })
@@ -44,19 +49,32 @@ export class LandingComponent {
         this._dataService.setSignature(value)
       }
     })
+
+    this._dataService.data$.subscribe({
+      next: (data) => {
+        if (data) this.validateBeleg(data)
+      }
+    })
   }
 
-  genPdf() {
-    // console.log('sign', this.signature)
+  ngOnDestroy(): void {
+    this.destroy$.next(true)
+    this.destroy$.unsubscribe()
   }
 
-  // <div [formGroup]="myGroup">
-  //   <input formControlName="firstName">
-  // </div>
+  validateBeleg(data: { consumer: any, content: any, signature: any }) {
+    if (
+      (data.consumer && data.consumer.personalnummer)
+      && (data.content && (data.content.endgeraete || data.content.sim || data.content.token) ) 
+      && (data.signature && data.signature.sign && data.signature.sign != '0')
+    ) {
+      this.isValidated = true
+    } else {
+      this.isValidated = false
+    }
+  }
 
-  // In your class:
-
-  // this.myGroup = new FormGroup({
-  //     firstName: new FormControl()
-  // });
+  generatePdf() {
+    this._router.navigate(['/beleg'])
+  }
 }

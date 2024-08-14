@@ -8,6 +8,8 @@
 - [ ] PDF-Erstellung,
 - [ ] Versendung per Mail,
 
-- [ ] Styling der MatTabs,
 - [x] Scrolling bei overflow defekt,
 - [ ] Splashscreen
+- [ ] update on blur
+- [ ] required fields error
+- [ ] validation to dataservice

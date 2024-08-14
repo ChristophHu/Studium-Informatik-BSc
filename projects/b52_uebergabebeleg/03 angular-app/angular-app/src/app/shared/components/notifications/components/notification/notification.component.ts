@@ -80,7 +80,6 @@ export class NotificationComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('Notification.ngOnDestroy')
     this.destroy$.next(true)
     this.destroy$.unsubscribe()
   }
