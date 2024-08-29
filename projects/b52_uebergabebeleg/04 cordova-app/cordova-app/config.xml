@@ -1,11 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="de.berlin.polizei.uebergabebelege" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>B52 Übergabebelege</name>
-    <description>B52 Übergabebelege Beschreibung</description>
-    <author email="dev@cordova.apache.org">
-        Apache Cordova Team
+    <description>Mit diese Anwendung werden die Übergabebelege des Bereiches Dir ZS IKT B 52 erstellt.</description>
+    <author email="christoph.huschenhoefer@polizei.berlin.de" href="http://www.berlin.de/polizei">
+        Christoph Huschenhoefer
     </author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <icon src="www/assets/icon/ic_launcher.png"/>
+    <platform name="android">
+		<preference name="AndroidXEnabled" value="true"/>
+		<preference name="android-minSdkVersion" value="26"/>
+		<preference name="android-targetSdkVersion" value="33"/>
+		<preference name="android-compileSdkVersion" value="33" />
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="www/assets/icon/ic_launcher.png"/>
+		<preference name="AndroidLaunchMode" value="singleTask"/>
+    </platform>
 </widget>

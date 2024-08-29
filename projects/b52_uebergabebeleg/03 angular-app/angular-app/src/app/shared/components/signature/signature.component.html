@@ -13,7 +13,7 @@
       <div class="min-h-screen bg-black bg-opacity-60 z-50" @fadeIn @fadeOut (click)="close()"></div>
       <div *ngIf="isShowModal" (click)="$event.stopPropagation()" @fadeInTop @fadeOutTop class="nxt_signature_modal absolute flex p-4 top-4 right-4 left-4 lg:top-12 lg:right-12 lg:left-12 justify-center bg-secondary text-dark rounded-lg shadow-lg z-60">
           <div class="absolute top-2 right-2 h-5 w-5 cursor-pointer" (click)="close()">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18" stroke-linecap="round" stroke-linejoin="round" /><path d="M6 6L18 18" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18" stroke-linecap="round" stroke-linejoin="round" /><path d="M6 6L18 18" stroke-linecap="round" stroke-linejoin="round" /></svg>
           </div>
           <div class="nxt_signature_header flex flex-col w-full">
             <h2 class="my-4 text-xl leading-6">{{ label }}</h2>

@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { CommonModule, NgIf } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 import { animate, state, style, transition, trigger } from '@angular/animations'
 import { SettingsComponent } from '../../../shared/components/settings/settings.component'
 import { IconsComponent } from '../../../shared/components/icons/icons.component'
-import { DataService } from '../../services/data.service'
 
 @Component({
   selector: 'sidebar',
@@ -12,7 +11,6 @@ import { DataService } from '../../services/data.service'
   imports: [
     CommonModule,
     IconsComponent,
-    NgIf,
     RouterLink,
     RouterLinkActive,
     SettingsComponent
@@ -56,15 +54,8 @@ export class SidebarComponent {
   }
   @Output() isOpen: EventEmitter<boolean> = new EventEmitter()
 
-  isValidated: boolean = false
-
-  constructor(private _dataService: DataService) {
+  constructor() {
     document.body.classList.contains('debug') ? this.debug = true : this.debug = false
-    this._dataService.data$.subscribe({
-      next: (data) => {
-        if (data) this.validateBeleg(data)
-      }
-    })
   }
 
   toggleSidebar() {
@@ -74,17 +65,5 @@ export class SidebarComponent {
 
   close() {
     this.isOpen.emit(false)
-  }
-
-  validateBeleg(data: { consumer: any, content: any, signature: any }) {
-    if (
-      (data.consumer && data.consumer.personalnummer)
-      && (data.content && (data.content.endgeraete || data.content.sim || data.content.token) ) 
-      && (data.signature && data.signature.sign && data.signature.sign != '0')
-    ) {
-      this.isValidated = true
-    } else {
-      this.isValidated = false
-    }
   }
 }

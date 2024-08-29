@@ -42,6 +42,9 @@ export class ConsumerComponent implements OnInit {
     this.consumerForm.valueChanges.subscribe({
       next: (value) => {
         this._dataService.setConsumer(value)
+        const json = JSON.stringify(value)
+        console.log('jason', json.toString())
+        console.log('jason', JSON.parse(json))
       }
     })
   }

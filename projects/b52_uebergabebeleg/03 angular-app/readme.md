@@ -5,11 +5,11 @@
 
 
 ## ToDo
-- [ ] PDF-Erstellung,
+- [x] PDF-Erstellung,
 - [ ] Versendung per Mail,
 
 - [x] Scrolling bei overflow defekt,
-- [ ] Splashscreen
+- [x] Splashscreen
 - [ ] update on blur
 - [ ] required fields error
 - [ ] validation to dataservice

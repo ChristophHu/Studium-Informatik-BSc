@@ -9,7 +9,7 @@
   <div class="m-2">
     <div class="nxt_button flex flex-col w-full mt-2" [formGroup]="signature">
       <label class="nxt_button_label my-2 text-sm leading-none">Unterschrift</label>
-      <nxt-signature formControlName="sign"></nxt-signature>
+      <nxt-signature formControlName="sign" id="sign"></nxt-signature>
     </div>
   </div>
   <pre class="debug-item-hide m-2 p-2 bg-blue-200 rounded">{{ signature.value | json }}</pre>

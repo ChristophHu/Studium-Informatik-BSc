@@ -5,6 +5,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { DataService } from '../../core/services/data.service';
 import { map, Subject, takeUntil, zip } from 'rxjs';
+import { DokumentationService } from '../../core/services/dokumentation.service';
 
 @Component({
   selector: 'app-beleg',
@@ -19,12 +20,16 @@ export class BelegComponent implements OnInit, OnDestroy {
   private pdfMake: any
   // private _consumer: any
   private prepare: any = { endgeraete: [], sim: [], token: [], tokenInformation: [] }
+  // private qrcode: string = 'test'
+
+  pdfDocGenerator: any
+  public pdf = ''//'./assets/test.pdf'
 
   @ViewChild('pdfViewer') pdfViewer?: any
 
   destroy$: Subject<boolean> = new Subject<boolean>()
   
-  constructor(private _dataService: DataService) {
+  constructor(private _dataService: DataService, private _dokumentationService: DokumentationService) {
     this.pdfMake = pdfMake
   }
 
@@ -39,14 +44,15 @@ export class BelegComponent implements OnInit, OnDestroy {
     .subscribe({
       next: (data) => {
         if (data) {
+          // this.prapareQRCode(data.consumer, data.content)
           this.prepare.endgeraete = this.prepareEndgeraete(data.content)
           this.prepare.sim = this.prepareSim(data.content)
           this.prepare.token = this.prepareToken(data.content)
           this.prepare.tokenInformation = this.prepareTokenInformation(data.content)
                   
-          const pdfDocGenerator = this.pdfMake.createPdf(this.genPdf(data.consumer, data.signature))
+          this.pdfDocGenerator = this.pdfMake.createPdf(this.genPdf(data.consumer, data.signature))
 
-          pdfDocGenerator.getBlob((blob:Blob) => {
+          this.pdfDocGenerator.getBlob((blob:Blob) => {
             this.pdfViewer.pdfSrc = blob
             this.pdfViewer.refresh()
           })
@@ -55,10 +61,47 @@ export class BelegComponent implements OnInit, OnDestroy {
     })
   }
 
+  save(): void {
+    // this.pdfDocGenerator.download()
+
+    this.pdfDocGenerator.getDataUrl((data: any) => {
+      this.pdf = data
+
+
+    })
+
+    setTimeout(() => {
+      var a = document.createElement('a')
+      a.download='name.pdf'
+      a.href=this.pdf
+      a.click()
+      console.log('click')
+      , 2000
+    })
+    
+
+    this.pdfDocGenerator.getBlob((blob: Blob) => {
+      blob.arrayBuffer().then((buff: ArrayBuffer) => {
+        const unit8ArrayVonPdf = new Uint8Array(buff)
+        // spinner beenden
+        let fileName = 'testfile.pdf'
+    
+        this._dokumentationService.share(fileName, unit8ArrayVonPdf, true)
+      }).catch(() => {
+        //spinner beenden
+      })
+    })
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next(true)
     this.destroy$.unsubscribe()
   }
+
+  // prapareQRCode(consumer: any, content: any): void {
+  //   let qr = JSON.stringify({ persnr: consumer.personalnummer, vorname: consumer.vorname, nachname: consumer.name, dienststelle: consumer.dienststelle, assystkennung: consumer.assystkennung })
+  //   this.qrcode = qr.toString()
+  // }
 
   prepareEndgeraete(content: any): any[] {
     if (content.endgeraete.length === 0) {
@@ -305,6 +348,7 @@ export class BelegComponent implements OnInit, OnDestroy {
             },
           ]
         },
+
         { text: 'Übergebene Gegenstände', style: 'subheader', margin: [ 0, 12, 0, 4 ] },
         
         this.prepare.endgeraete,

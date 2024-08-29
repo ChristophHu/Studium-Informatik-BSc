@@ -14,12 +14,29 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "cordova-android": "^13.0.0",
-    "cordova-browser": "^7.0.0"
+    "cordova-browser": "^7.0.0",
+    "cordova-pdf-generator": "^2.1.1",
+    "cordova-plugin-device": "^3.0.0",
+    "cordova-plugin-file": "^8.1.0",
+    "cordova-plugin-startintent": "github:mightymop/cordova-plugin-startintent"
   },
   "cordova": {
     "platforms": [
       "browser",
       "android"
-    ]
+    ],
+    "plugins": {
+      "cordova-plugin-cors": {},
+      "cordova-plugin-file": {
+        "ANDROIDX_WEBKIT_VERSION": "1.4.0"
+      },
+      "cordova-plugin-camera": {
+        "ANDROIDX_CORE_VERSION": "1.6.+"
+      },
+      "cordova-plugin-device": {},
+      "cordova-plugin-startintent": {},
+      "cordova-pdf-generator": {},
+      "cordova-plugin-network-information": {}
+    }
   }
 }
